@@ -1,6 +1,7 @@
-import { Application, Request } from 'express';
+import { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 // import get from 'lodash/get';
+// import { AuthRequest } from '../types'
 import schema from './schema';
 import resolvers from './resolvers';
 // import { User } from '../models';
@@ -13,12 +14,12 @@ import resolvers from './resolvers';
 //   genChatRoomsModel,
 // } = require('../connectors');
 
-const gqlServer = (app: Application): void => {
+const gqlServer = (app: Express): void => {
   const apolloServer = new ApolloServer({
     typeDefs: schema,
     resolvers,
     // schema,
-    context: async ({ req: Request }) => {
+    context: async ({ req: AuthRequest }): Promise<{}> => {
       // User data is decoded on the validateJwtMiddleware
       // const usr = req.user && req.user._id
       //   ? await User.findOne({ _id: req.user._id })
