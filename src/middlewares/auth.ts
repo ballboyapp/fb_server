@@ -4,8 +4,8 @@ import admin from 'firebase-admin';
 // https://stackoverflow.com/questions/58200432/argument-of-type-req-request-res-iresponse-next-nextfunction-void-is
 declare module 'express-serve-static-core' {
   interface Request {
-    user: {
-      id: any, // TODO: fix me!
+    user: null | {
+      id: admin.auth.DecodedIdToken,
     };
   }
 }
@@ -14,11 +14,11 @@ declare module 'express-serve-static-core' {
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
 // `Authorization: Bearer <Firebase ID Token>`.
 // when decoded successfully, the ID Token content will be added as `req.user`.
-const authMiddleware = async (
+const auth = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   console.log('Check if request is authorized with Firebase ID token');
 
   if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) &&
@@ -27,7 +27,9 @@ const authMiddleware = async (
         'Make sure you authorize your request by providing the following HTTP header:',
         'Authorization: Bearer <Firebase ID Token>',
         'or by passing a "__session" cookie.');
-    res.status(403).send('Unauthorized');
+    // res.status(403).send('Unauthorized');
+    req.user = null;
+    next();
     return;
   }
 
@@ -42,7 +44,9 @@ const authMiddleware = async (
     idToken = req.cookies.__session;
   } else {
     // No cookie
-    res.status(403).send('Unauthorized');
+    // res.status(403).send('Unauthorized');
+    req.user = null;
+    next();
     return;
   }
 
@@ -56,9 +60,11 @@ const authMiddleware = async (
     return;
   } catch (error) {
     console.error('Error while verifying Firebase ID token:', error);
-    res.status(403).send('Unauthorized');
+    // res.status(403).send('Unauthorized');
+    req.user = null;
+    next();
     return;
   }
 };
 
-export { authMiddleware }
+export { auth }

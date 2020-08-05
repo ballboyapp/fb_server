@@ -2,7 +2,7 @@ import express, { Express } from 'express';
 import admin from 'firebase-admin';
 import { https } from 'firebase-functions';
 import cors from 'cors';
-import { authMiddleware } from './middlewares'
+import { auth } from './middlewares'
 import { gqlServer } from './graphql/server';
 
 admin.initializeApp();
@@ -12,7 +12,7 @@ const isProduction = app.get('env') === 'production';
 console.log({ isProduction });
 
 app.use(cors()); // TODO
-app.use(authMiddleware);
+app.use(auth);
 
 gqlServer(app);
 

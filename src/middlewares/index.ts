@@ -1,5 +1,5 @@
-import { authMiddleware } from './auth'
+import { auth } from './auth'
 
 export {
-  authMiddleware,
+  auth,
 }
