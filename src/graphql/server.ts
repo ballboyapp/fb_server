@@ -45,8 +45,7 @@ const gqlServer = (app: Express): void => {
     playground: true
   });
 
-  // TODO: setup cors on index.ts
-  apolloServer.applyMiddleware({ app, path: '/', cors: true });
+  apolloServer.applyMiddleware({ app, path: '/' });
 }
 
 export { gqlServer };

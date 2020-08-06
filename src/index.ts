@@ -5,15 +5,39 @@ import cors from 'cors';
 import { auth } from './middlewares'
 import { gqlServer } from './graphql/server';
 
+const { CLIENT_URL } = process.env;
+
 admin.initializeApp();
 
 const app: Express = express();
+
 const isProduction = app.get('env') === 'production';
 console.log({ isProduction });
 
-app.use(cors()); // TODO
+// Setup cors
+if (isProduction) {
+  if (CLIENT_URL == null) {
+    throw new Error('CLIENT_URL is not defined')
+  }
+
+  // Enable the app to receive requests from the front end
+  app.use('*', cors({ origin: [CLIENT_URL] }));
+
+  // Use enforce.HTTPS({ trustProtoHeader: true }) in case you are behind a load balancer (Heroku)
+  // app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
+  // Enable if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
+  // see https://expressjs.com/en/guide/behind-proxies.html
+  app.set('trust proxy', 1);
+} else {
+  // Enable the app to receive requests from the React app and Storybook when running locally
+  app.use(cors());
+}
+
+// Parse auth token and set req.user.id
 app.use(auth);
 
+// Create Graphlql server
 gqlServer(app);
 
 // Graphql api
