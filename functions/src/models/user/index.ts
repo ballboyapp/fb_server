@@ -1,5 +1,6 @@
 import { Ctx } from '../../types'
 import { updateUser } from './update-user'
+import { getPrivateUser } from './get-private-user'
 // const signup = require('./signup');
 // const login = require('./login');
 // const sendPasscode = require('./send-passcode');
@@ -22,7 +23,7 @@ const genUserModel: (ctx: Ctx) => object = (ctx) => ({
   // sendPasscode: args => sendPasscode(ctx, args),
   // validatePasscode: args => validatePasscode(ctx, args),
   updateUser: (args: object) => updateUser(ctx, args),
-  // getPrivateUser: args => getPrivateUser(ctx, args),
+  getPrivateUser: (args: object) => getPrivateUser(ctx),
   // getPublicUser: args => getPublicUser(ctx, args),
   // getPublicUsers: args => getPublicUsers(ctx, args),
 })
