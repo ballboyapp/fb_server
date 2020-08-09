@@ -4,6 +4,8 @@ import { User } from '../types'
 
 const db = admin.firestore()
 
+// TODO: use class with static methods
+// https://github.com/betaflag/graphql-server-scaffolding/tree/master/role-oriented/src/models
 //-----------------------------------------------------------------------------
 /**
  * Get user for the given id
