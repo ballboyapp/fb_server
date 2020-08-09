@@ -8,17 +8,29 @@ const db = admin.firestore()
 // https://github.com/betaflag/graphql-server-scaffolding/tree/master/role-oriented/src/models
 //-----------------------------------------------------------------------------
 /**
- * Get user for the given id
- * @param {String} userId
- * @returns {Promise}
+ * Query user for the given id
  */
-const findById = async (userId: string): Promise<User | null> => {
-  if (userId == null) {
-    throw new Error('getUserById userId is required')
+const findById: (id: string) => Promise<User | null> = async (id) => {
+  if (id == null) {
+    throw new Error('Bad request')
   }
 
+  const doc = await db.collection('users')
+    .doc(id)
+    .get()
+
+  if (doc == null || !doc.exists) {
+    return null
+  }
+
+  return spreadDoc(doc)
+}
+//-----------------------------------------------------------------------------
+/**
+ * Query random user
+ */
+const findOne: () => Promise<User | null> = async () => {
   const snap = await db.collection('users')
-    .where('id', '==', userId)
     .limit(1)
     .get()
 
@@ -32,25 +44,21 @@ const findById = async (userId: string): Promise<User | null> => {
 }
 //-----------------------------------------------------------------------------
 /**
- * Get first user
- * @returns {Promise}
+ * Update user for the given id
  */
-const findOne = async (): Promise<User | null> => {
-  const snap = await db.collection('users')
-    .limit(1)
-    .get()
-
-  if (snap == null || snap.empty) {
-    return null
-  }
-
-  const doc = snap.docs[0]
-
-  return spreadDoc(doc)
-}
+const update: (
+  id: string,
+  fields: object,
+) => Promise<admin.firestore.WriteResult>
+  = (id, fields) => (
+  db.collection('users')
+    .doc(id)
+    .update(fields)
+)
 //-----------------------------------------------------------------------------
 
 export {
   findById,
   findOne,
+  update,
 }

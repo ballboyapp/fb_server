@@ -4,10 +4,19 @@ import admin from 'firebase-admin';
 // https://github.com/microsoft/TypeScript/issues/7352#issuecomment-191547232
 declare module 'express-serve-static-core' {
   interface Request {
-    user: null | admin.auth.DecodedIdToken,
+    user: admin.auth.DecodedIdToken | null,
   }
 }
 
-export interface User {
+interface User {
   id: string
+}
+
+interface Ctx {
+  me: User | null,
+}
+
+export {
+  User,
+  Ctx,
 }

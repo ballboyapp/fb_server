@@ -3,16 +3,15 @@ import { ApolloServer } from 'apollo-server-express';
 // import get from 'lodash/get';
 import schema from './schema';
 import resolvers from './resolvers';
-import * as Users from '../db/users'
-// import { User } from '../models';
-// const {
-//   genUserModel,
-//   genCityModel,
-//   genSpotModel,
-//   genActivityModel,
-//   genNotificationsListModel,
-//   genChatRoomsModel,
-// } = require('../connectors');
+import * as Users from '../db/users' // TODO: use a class + static methods
+import {
+  genUserModel,
+  // genCityModel,
+  // genSpotModel,
+  // genActivityModel,
+  // genNotificationsListModel,
+  // genChatRoomsModel,
+} from '../models'
 
 
 const gqlServer = (app: Express): void => {
@@ -32,14 +31,14 @@ const gqlServer = (app: Express): void => {
 
       return {
         me,
-        // models: {
-        //   User: genUserModel({ me }),
-        //   City: genCityModel({ me }),
-        //   Spot: genSpotModel({ me }),
-        //   Activity: genActivityModel({ me }),
-        //   NotificationsList: genNotificationsListModel({ me }),
-        //   ChatRooms: genChatRoomsModel({ me }),
-        // },
+        models: {
+          User: genUserModel({ me }),
+          // City: genCityModel({ me }),
+          // Spot: genSpotModel({ me }),
+          // Activity: genActivityModel({ me }),
+          // NotificationsList: genNotificationsListModel({ me }),
+          // ChatRooms: genChatRoomsModel({ me }),
+        },
       };
     },
     introspection: true,

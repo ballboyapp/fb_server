@@ -1,1 +1,1 @@
-db: API to interact with DB(s)
+DB: API to interact with DB(s)
