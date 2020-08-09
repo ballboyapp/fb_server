@@ -1,13 +1,13 @@
-import express, { Express } from 'express';
 import admin from 'firebase-admin';
+admin.initializeApp();
+import express, { Express } from 'express';
 import { https } from 'firebase-functions';
 import cors from 'cors';
 import { auth } from './middlewares'
 import { gqlServer } from './graphql/server';
 
+// TODO
 const { CLIENT_URL } = process.env;
-
-admin.initializeApp();
 
 const app: Express = express();
 

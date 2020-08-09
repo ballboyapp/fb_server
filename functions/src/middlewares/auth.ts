@@ -1,15 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import admin from 'firebase-admin';
 
-// https://stackoverflow.com/questions/58200432/argument-of-type-req-request-res-iresponse-next-nextfunction-void-is
-declare module 'express-serve-static-core' {
-  interface Request {
-    user: null | {
-      id: admin.auth.DecodedIdToken,
-    };
-  }
-}
-
 // Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
 // `Authorization: Bearer <Firebase ID Token>`.
@@ -53,9 +44,7 @@ const auth = async (
   try {
     const decodedIdToken = await admin.auth().verifyIdToken(idToken);
     console.log('ID Token correctly decoded', decodedIdToken);
-    req.user = {
-      id: decodedIdToken
-    };
+    req.user = decodedIdToken
     next();
     return;
   } catch (error) {
