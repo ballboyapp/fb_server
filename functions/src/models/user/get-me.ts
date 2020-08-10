@@ -1,11 +1,11 @@
 import { Ctx, User } from '../../types'
 import * as  Users from '../../db/users'
 
-const getPrivateUser: (
+const getMe: (
   ctx: Ctx,
 ) => Promise<User | null>
   = ({ me }) => {
-  // Make sure user is logged in
+  // Only allow owner to get its own data
   if (me?.id == null) {
     throw new Error('Unauthorized')
   }
@@ -15,5 +15,5 @@ const getPrivateUser: (
 }
 
 export {
-  getPrivateUser,
+  getMe,
 }

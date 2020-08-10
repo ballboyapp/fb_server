@@ -2,7 +2,7 @@ import admin from 'firebase-admin'
 import { Ctx } from '../../types'
 import * as  Users from '../../db/users'
 
-const updateUser: (
+const updateMe: (
   ctx: Ctx,
   args: object,
 ) => Promise<admin.firestore.WriteResult>
@@ -21,5 +21,5 @@ const updateUser: (
 }
 
 export {
-  updateUser,
+  updateMe,
 }
