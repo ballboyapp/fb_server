@@ -2,6 +2,7 @@ const resolverFunctions = {
   Query: {
     hello: () => 'world'
   }
-};
+}
 
-export default resolverFunctions;
+export default resolverFunctions
+

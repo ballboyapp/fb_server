@@ -1,9 +1,8 @@
-import { Express } from 'express';
-import { ApolloServer } from 'apollo-server-express';
-// import get from 'lodash/get';
-import schema from './schema';
-import resolvers from './resolvers';
-import * as Users from '../db/users' // TODO: use a class + static methods
+import { Express } from 'express'
+import { ApolloServer } from 'apollo-server-express'
+import schema from './schema'
+import resolvers from './resolvers'
+import { Users } from '../db'
 import {
   genUserModel,
   // genCityModel,
@@ -22,11 +21,11 @@ const gqlServer = (app: Express): void => {
     context: async ({ req }): Promise<{}> => {
       // User data is decoded using the auth middleware
       const me = req?.user?.uid
-        ? await Users.findById(req.user.uid)
+        ? await Users.getById(req.user.uid)
         : null
 
       // TODO: disable in production
-      // const me = await Users.findOne()
+      // const me = await Users.getOne()
       // console.log({ loggedInUser: get(me, 'profile.username', 'unknown') });
 
       return {
@@ -39,13 +38,13 @@ const gqlServer = (app: Express): void => {
           // NotificationsList: genNotificationsListModel({ me }),
           // ChatRooms: genChatRoomsModel({ me }),
         },
-      };
+      }
     },
     introspection: true,
     playground: true
-  });
+  })
 
-  apolloServer.applyMiddleware({ app, path: '/' });
+  apolloServer.applyMiddleware({ app, path: '/' })
 }
 
-export { gqlServer };
+export { gqlServer }

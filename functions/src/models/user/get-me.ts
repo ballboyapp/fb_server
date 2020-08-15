@@ -1,17 +1,16 @@
-import { Ctx, User } from '../../types'
-import * as  Users from '../../db/users'
+import { Ctx, promiseUserNull } from '../../types'
+import { Users }  from '../../db'
 
-const getMe: (
-  ctx: Ctx,
-) => Promise<User | null>
-  = ({ me }) => {
+const getMe: (ctx: Ctx) => promiseUserNull = (ctx) => {
+  const id = ctx?.me?.id
+
   // Only allow owner to get its own data
-  if (me?.id == null) {
+  if (id == null) {
     throw new Error('Unauthorized')
   }
 
-  // Query current logged in user
-  return Users.findById(me.id)
+  // Query logged in user
+  return Users.getById(id)
 }
 
 export {

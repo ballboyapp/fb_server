@@ -1,64 +1,69 @@
 import admin from 'firebase-admin'
 import { spreadDoc } from './utils'
-import { User } from '../types'
+import { promiseWrite, promiseUserNull } from '../types'
 
 const db = admin.firestore()
 
-// TODO: use class with static methods
-// https://github.com/betaflag/graphql-server-scaffolding/tree/master/role-oriented/src/models
-//-----------------------------------------------------------------------------
-/**
- * Query user for the given id
- */
-const findById: (id: string) => Promise<User | null> = async (id) => {
-  if (id == null) {
-    throw new Error('Bad request')
+class Users {
+  /**
+   * Set user for the given id
+   */
+  static set: (id: string, doc: object) => promiseWrite = (id, doc) => {
+    if (id == null) {
+      throw new Error('Bad request')
+    }
+
+    return db.collection('users')
+      .doc(id)
+      .set(doc)
   }
 
-  const doc = await db.collection('users')
-    .doc(id)
-    .get()
+  /**
+   * Query user for the given id
+   */
+  static getById: (id: string) => promiseUserNull = async (id) => {
+    if (id == null) {
+      throw new Error('Bad request')
+    }
 
-  if (doc == null || !doc.exists) {
-    return null
+    const doc = await db.collection('users')
+      .doc(id)
+      .get()
+
+    if (doc == null || !doc.exists) {
+      return null
+    }
+
+    return spreadDoc(doc)
   }
 
-  return spreadDoc(doc)
+  /**
+   * Query random user
+   */
+  static getOne: () => promiseUserNull = async () => {
+    const snap = await db.collection('users')
+      .limit(1)
+      .get()
+
+    if (snap == null || snap.empty) {
+      return null
+    }
+
+    const doc = snap.docs[0]
+
+    return spreadDoc(doc)
+  }
+
+  /**
+   * Update user for the given id
+   */
+  static update: (id: string, fields: object) => promiseWrite = (id, fields) => (
+    db.collection('users')
+      .doc(id)
+      .update(fields)
+  )
 }
-//-----------------------------------------------------------------------------
-/**
- * Query random user
- */
-const findOne: () => Promise<User | null> = async () => {
-  const snap = await db.collection('users')
-    .limit(1)
-    .get()
-
-  if (snap == null || snap.empty) {
-    return null
-  }
-
-  const doc = snap.docs[0]
-
-  return spreadDoc(doc)
-}
-//-----------------------------------------------------------------------------
-/**
- * Update user for the given id
- */
-const update: (
-  id: string,
-  fields: object,
-) => Promise<admin.firestore.WriteResult>
-  = (id, fields) => (
-  db.collection('users')
-    .doc(id)
-    .update(fields)
-)
-//-----------------------------------------------------------------------------
 
 export {
-  findById,
-  findOne,
-  update,
+  Users,
 }
