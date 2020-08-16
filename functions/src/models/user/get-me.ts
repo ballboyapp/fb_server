@@ -1,8 +1,8 @@
-import { Ctx, promiseUserNull } from '../../types'
-import { Users }  from '../../db'
+import { CtxMe, promiseUserNull } from '../../types'
+import { Users } from '../../db'
 
-const getMe: (ctx: Ctx) => promiseUserNull = (ctx) => {
-  const id = ctx?.me?.id
+const getMe: (ctxMe: CtxMe) => promiseUserNull = (ctxMe) => {
+  const id = ctxMe?.me?.id
 
   // Only allow owner to get its own data
   if (id == null) {
@@ -13,6 +13,4 @@ const getMe: (ctx: Ctx) => promiseUserNull = (ctx) => {
   return Users.getById(id)
 }
 
-export {
-  getMe,
-}
+export { getMe }

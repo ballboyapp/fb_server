@@ -12,15 +12,31 @@ interface User {
   id: string
 }
 
-interface Ctx {
+interface CtxMe {
   me: User | null,
 }
+
+type userModel = {
+  getMe: () => promiseUserNull,
+  updateMe: (args: object) => promiseWrite,
+}
+
+interface CtxModels {
+  models: {
+    User: userModel,
+  },
+}
+
+interface Ctx extends CtxMe, CtxModels { }
 
 type promiseWrite = Promise<admin.firestore.WriteResult>
 type promiseUserNull = Promise<User | null>
 
 export {
   User,
+  CtxMe,
+  userModel,
+  CtxModels,
   Ctx,
   promiseWrite,
   promiseUserNull,

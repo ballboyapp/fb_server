@@ -1,5 +1,6 @@
 import { Express } from 'express'
 import { ApolloServer } from 'apollo-server-express'
+import { Ctx } from '../types'
 import schema from './schema'
 import resolvers from './resolvers'
 import { Users } from '../db'
@@ -18,7 +19,7 @@ const gqlServer = (app: Express): void => {
     typeDefs: schema,
     resolvers,
     // schema,
-    context: async ({ req }): Promise<{}> => {
+    context: async ({ req }): Promise<Ctx> => {
       // User data is decoded using the auth middleware
       const me = req?.user?.uid
         ? await Users.getById(req.user.uid)

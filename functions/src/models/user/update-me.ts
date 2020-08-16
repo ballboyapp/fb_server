@@ -1,8 +1,10 @@
-import { Ctx, promiseWrite } from '../../types'
+import { CtxMe, promiseWrite } from '../../types'
 import { Users } from '../../db'
 
-const updateMe: (ctx: Ctx, args: object) => promiseWrite = (ctx, args) => {
-  const id = ctx?.me?.id
+type fn = (ctxMe: CtxMe, args: object) => promiseWrite
+
+const updateMe: fn = async (ctxMe, args) => {
+  const id = ctxMe?.me?.id
 
   // Only allow owner to update its own data
   if (id == null) {
@@ -13,10 +15,7 @@ const updateMe: (ctx: Ctx, args: object) => promiseWrite = (ctx, args) => {
     throw new Error('Bad request')
   }
 
-  // Update user data
   return Users.update(id, args)
 }
 
-export {
-  updateMe,
-}
+export { updateMe }
