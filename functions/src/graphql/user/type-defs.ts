@@ -15,7 +15,7 @@ const userTypes = `
     country: String
   }
 
-  type PrivateUser {
+  type PrivateUser { # TODO: change name to 'Me'
     id: ID!
     #createdAt: Date
     email: String
@@ -24,7 +24,7 @@ const userTypes = `
     #location: Point
   }
 
-  type PublicUser {
+  type PublicUser { # TODO: change name to 'User'
     id: ID!
     profile: UserProfile
   }
@@ -43,7 +43,7 @@ const userTypes = `
 
   type Mutation {
     #signup(language: Language!): PrivateUser
-    signup(language: String!): PrivateUser
+    signup(language: String!): PrivateUser # TODO: change name to 'setMe' ?
 
     updateMe(
       username: String,

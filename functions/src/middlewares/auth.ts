@@ -7,7 +7,6 @@ import admin from 'firebase-admin'
 // when decoded successfully, the ID Token content will be added as `req.user`.
 const auth = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   console.log('Check if request is authorized with Firebase ID token')
-  console.log(req.headers.authorization)
 
   if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) &&
     !(req.cookies && req.cookies.__session)) {
@@ -15,7 +14,6 @@ const auth = async (req: Request, res: Response, next: NextFunction): Promise<vo
       'Make sure you authorize your request by providing the following HTTP header:',
       'Authorization: Bearer <Firebase ID Token>',
       'or by passing a "__session" cookie.')
-    // res.status(403).send('Unauthorized');
     req.user = null
     next()
     return
@@ -23,7 +21,7 @@ const auth = async (req: Request, res: Response, next: NextFunction): Promise<vo
 
   let idToken
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
-    console.log(`Found "Authorization" header ${req.headers.authorization}`)
+    console.log('Found "Authorization" header')
     // Read the ID Token from the Authorization header.
     idToken = req.headers.authorization.split('Bearer ')[1]
   } else if (req.cookies) {
@@ -32,7 +30,6 @@ const auth = async (req: Request, res: Response, next: NextFunction): Promise<vo
     idToken = req.cookies.__session
   } else {
     // No cookie
-    // res.status(403).send('Unauthorized');
     req.user = null
     next()
     return
@@ -46,7 +43,6 @@ const auth = async (req: Request, res: Response, next: NextFunction): Promise<vo
     return
   } catch (error) {
     console.error('Error while verifying Firebase ID token:', error)
-    // res.status(403).send('Unauthorized');
     req.user = null
     next()
     return
