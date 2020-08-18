@@ -10,14 +10,14 @@ const userTypes = `
     avatar: String
     #birthdate: Date
     #gender: Gender
-    language: Language
+    language: String #Language
     city: String
     country: String
   }
 
   type PrivateUser {
     id: ID!
-    createdAt: Date
+    #createdAt: Date
     email: String
     profile: UserProfile
     #formattedAddress: String
@@ -42,26 +42,13 @@ const userTypes = `
   # MUTATIONS
 
   type Mutation {
-    #signup(
-    #  username: String!,
-    #  email: String!,
-    #  language: Language!,
-    #): PrivateUser
-
-    #login(email: String!): PrivateUser
-
-    # sendPasscode(email: String!): PrivateUser
-
-    #validatePasscode(email: String!, passcode: String!): AuthToken
+    #signup(language: Language!): PrivateUser
+    signup(language: String!): PrivateUser
 
     updateMe(
       username: String,
-      gender: String,
-      avatar: String,
       city: String,
       country: String,
-      #formattedAddress: String,
-      #coordinates: [Float],
     ): PrivateUser
 
     # TODO: delete user

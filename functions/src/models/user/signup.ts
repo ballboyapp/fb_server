@@ -1,28 +1,48 @@
+import { auth } from 'firebase-admin'
 import { CtxMe, promiseWrite } from '../../types'
 import { Users } from '../../db'
 
 type fn = (ctxMe: CtxMe, args: object) => promiseWrite
 
 const signup: fn = async (ctxMe, args) => {
-  // Make sure user is logged out
-  if (usr) {
-    return null
+  const id = ctxMe?.me?.id
+  console.log(`signup model id: ${id}, ctxMe: ${JSON.stringify(ctxMe)}`)
+
+  // Only allow owner to update its own data
+  if (id == null) {
+    throw new Error('Unauthorized')
   }
 
-  const { error } = validateSignup(args)
-  if (error) {
-    console.log('INVALID SIGNUP CREDENTIALS', error)
-    throw new Error(error.details[0].message) // Bad request - 400
+  if (args == null) {
+    throw new Error('Bad request')
   }
 
   // Make sure user doesn't exist already
-  const user = await User.findOne({ email: args.email })
-  if (user) {
-    console.log('USER ALREADY REGISTERED', user)
-    throw new Error('Email already in use') // Bad request - 400
+  const exists = (await Users.getById(id)) != null
+
+  if (exists) {
+    throw new Error('Bad request')
   }
 
-  return User.createUser(args) // Success request - 200
+  // Get auth user
+  const user = await auth().getUser(id)
+
+  if (user == null) {
+    throw new Error('Bad request')
+  }
+
+  // Insert user in DB
+  const doc = {
+    id: user.uid,
+    email: user.email || '',
+    emailVerified: user.emailVerified || false,
+    disabled: user.disabled || false,
+    username: user.displayName || '',
+    avatar: user.photoURL || '',
+    ...args, // language, ...
+  }
+
+  return Users.set(id, doc)
 }
 
-module.exports = signup
+export { signup }

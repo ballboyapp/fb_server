@@ -5,9 +5,7 @@ const resolvers = mergeResolvers([
   userResolvers,
 ])
 
-export {
-  resolvers,
-}
+export { resolvers }
 
 
 // const { mergeTypes } = require('merge-graphql-schemas');

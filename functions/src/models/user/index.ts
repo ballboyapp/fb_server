@@ -1,4 +1,5 @@
 import { CtxMe, userModel } from '../../types'
+import { signup } from './signup'
 import { getMe } from './get-me'
 import { updateMe } from './update-me'
 
