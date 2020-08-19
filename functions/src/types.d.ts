@@ -12,6 +12,12 @@ interface User {
   id: string
 }
 
+interface City {
+  id: string
+  name: string
+  country: string
+}
+
 interface CtxMe {
   me: User | null,
 }
@@ -31,7 +37,11 @@ interface CtxModels {
 interface Ctx extends CtxMe, CtxModels { }
 
 type promiseWrite = Promise<admin.firestore.WriteResult>
+type promiseDocReference = Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>>
+type queryDocData = admin.firestore.QueryDocumentSnapshot<admin.firestore.DocumentData>
+type docData = admin.firestore.DocumentSnapshot<admin.firestore.DocumentData>
 type promiseUserNull = Promise<User | null>
+type promiseCityNull = Promise<City | null>
 
 export {
   User,
@@ -40,5 +50,9 @@ export {
   CtxModels,
   Ctx,
   promiseWrite,
+  promiseDocReference,
+  queryDocData,
+  docData,
   promiseUserNull,
+  promiseCityNull,
 }

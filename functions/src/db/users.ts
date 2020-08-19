@@ -9,7 +9,7 @@ class Users {
    * Set user for the given id
    */
   static set: (id: string, doc: object) => promiseWrite = (id, doc) => {
-    if (id == null) {
+    if (id == null || doc == null) {
       throw new Error('Bad request')
     }
 
@@ -64,6 +64,4 @@ class Users {
   )
 }
 
-export {
-  Users,
-}
+export { Users }
