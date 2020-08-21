@@ -1,4 +1,4 @@
-import getCities from './get-cities'
+import { getCities } from './get-cities'
 
 const Query = {
   cities: getCities,

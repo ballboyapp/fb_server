@@ -1,10 +1,10 @@
-import { Ctx, promiseCityNull } from '../../../../types'
+import { Ctx, promiseCities } from '../../../../types'
 
-type fn = (root: object, args: object, ctx: Ctx) => promiseCityNull
+type fn = (root: object, args: object, ctx: Ctx) => promiseCities
 
-const getCities: fn = (root, args, ctx) => (
+const getCities: fn = (root, args, ctx) => {
   // console.log('citiesQuery', args);
-  ctx.models.City.getCities(args)
-)
+  return ctx.models.City.getCities()
+}
 
 export { getCities }

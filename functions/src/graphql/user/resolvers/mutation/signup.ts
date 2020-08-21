@@ -3,9 +3,12 @@ import { Ctx, promiseUserNull } from '../../../../types'
 
 type fn = (root: object, args: object, ctx: Ctx) => promiseUserNull
 
+// TODO: change name to setMe
 const signup: fn = async (root, args, ctx) => {
   console.log(`signupMutation args: ${JSON.stringify(args)}, ctx: ${JSON.stringify(ctx)} !!!!`)
+
   await ctx.models.User.signup(args)
+
   const user = await ctx.models.User.getMe()
 
   // TODO: or use listener?

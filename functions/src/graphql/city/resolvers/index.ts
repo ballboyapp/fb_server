@@ -1,11 +1,11 @@
-import City from './city'
-import Query from './query'
-import Mutation from './mutation'
+import { City } from './city'
+import { Query } from './query'
+import { Mutation } from './mutation'
 
-const resolvers = {
+const cityResolvers = {
   City,
   Query,
   Mutation,
 }
 
-export { resolvers }
+export { cityResolvers }
