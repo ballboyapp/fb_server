@@ -1,6 +1,6 @@
-import { queryDocData, docData } from '../types'
+import { Id, queryDocData, docData } from '../types'
 
-type fn = (doc: queryDocData | docData) => { id: string } // TODO: add extra fields
+type fn = (doc: queryDocData | docData) => Id
 
 const spreadDoc: fn = (doc) => ({ id: doc.id, ...doc.data() })
 

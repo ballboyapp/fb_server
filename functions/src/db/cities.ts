@@ -1,6 +1,11 @@
 import admin from 'firebase-admin'
 import { spreadDoc } from './utils'
-import { promiseDocReference, promiseCityNull } from '../types'
+import {
+  City,
+  promiseDocReference,
+  promiseCityNull,
+  promiseCities,
+} from '../types'
 
 const db = admin.firestore()
 
@@ -31,13 +36,13 @@ class Cities {
 
     const doc = snap.docs[0]
 
-    return spreadDoc(doc)
+    return spreadDoc(doc) as City
   }
 
   /**
    * Query all cities
    */
-  static getAll: () => promiseCityNull[] = async () => {
+  static getAll: () => promiseCities = async () => {
     const snap = await db.collection('cities')
       .get()
 
@@ -45,7 +50,7 @@ class Cities {
       return []
     }
 
-    return snap.docs.map((doc) => spreadDoc(doc))
+    return snap.docs.map((doc) => spreadDoc(doc) as City)
   }
 }
 

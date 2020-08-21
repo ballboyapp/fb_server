@@ -1,10 +1,12 @@
 import { CtxMe, promiseUserNull } from '../../types'
 import { Users } from '../../db'
 
-const getMe: (ctxMe: CtxMe) => promiseUserNull = (ctxMe) => {
+type fn = (ctxMe: CtxMe) => promiseUserNull
+
+const getMe: fn = (ctxMe) => {
   const id = ctxMe?.me?.id
 
-  // Only allow owner to get its own data
+  // Only allow owner to access its own data
   if (id == null) {
     throw new Error('Unauthorized')
   }

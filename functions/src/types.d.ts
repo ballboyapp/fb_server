@@ -8,15 +8,26 @@ declare module 'express-serve-static-core' {
   }
 }
 
-interface User {
+type promiseWrite = Promise<admin.firestore.WriteResult>
+type promiseDocReference = Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>>
+type queryDocData = admin.firestore.QueryDocumentSnapshot<admin.firestore.DocumentData>
+type docData = admin.firestore.DocumentSnapshot<admin.firestore.DocumentData>
+
+interface Id {
   id: string
 }
 
-interface City {
-  id: string
+interface User extends Id { }
+// TODO: should we use Me as well? interfact Me extends User
+
+interface City extends Id {
   name: string
   country: string
 }
+
+type promiseUserNull = Promise<User | null>
+type promiseCityNull = Promise<City | null>
+type promiseCities = Promise<City[]>
 
 interface CtxMe {
   me: User | null,
@@ -28,31 +39,33 @@ type userModel = {
   updateMe: (args: object) => promiseWrite,
 }
 
+type cityModel = {
+  getCities: () => promiseCities,
+}
+
 interface CtxModels {
   models: {
     User: userModel,
+    City: cityModel,
   },
 }
 
 interface Ctx extends CtxMe, CtxModels { }
 
-type promiseWrite = Promise<admin.firestore.WriteResult>
-type promiseDocReference = Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>>
-type queryDocData = admin.firestore.QueryDocumentSnapshot<admin.firestore.DocumentData>
-type docData = admin.firestore.DocumentSnapshot<admin.firestore.DocumentData>
-type promiseUserNull = Promise<User | null>
-type promiseCityNull = Promise<City | null>
-
 export {
-  User,
-  CtxMe,
-  userModel,
-  CtxModels,
-  Ctx,
   promiseWrite,
   promiseDocReference,
   queryDocData,
   docData,
+  Id,
+  User,
+  City,
   promiseUserNull,
   promiseCityNull,
+  promiseCities,
+  CtxMe,
+  userModel,
+  cityModel,
+  CtxModels,
+  Ctx,
 }
