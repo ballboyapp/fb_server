@@ -37,7 +37,7 @@ const auth = async (req: Request, res: Response, next: NextFunction): Promise<vo
 
   try {
     const decodedIdToken = await admin.auth().verifyIdToken(idToken)
-    console.log('ID Token correctly decoded', decodedIdToken)
+    // console.log('ID Token correctly decoded', decodedIdToken)
     req.user = decodedIdToken
     next()
     return

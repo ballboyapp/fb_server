@@ -43,7 +43,7 @@ const userTypes = `
 
   type Mutation {
     #signup(language: Language!): PrivateUser
-    signup(language: String!): PrivateUser # TODO: change name to 'setMe' ?
+    setMe(language: String!): PrivateUser
 
     updateMe(
       username: String,

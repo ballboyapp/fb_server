@@ -5,7 +5,6 @@ import { https } from 'firebase-functions'
 import cors from 'cors'
 import { auth } from './middlewares'
 import { gqlServer } from './graphql/server'
-import { listenerSignup } from './listeners'
 
 // // TODO
 // const { CLIENT_URL } = process.env
@@ -48,5 +47,4 @@ const graphql = https.onRequest(app)
 
 export {
   graphql,
-  listenerSignup,
 }

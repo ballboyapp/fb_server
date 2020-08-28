@@ -1,7 +1,7 @@
 import { getCities } from './get-cities'
 
 const Query = {
-  cities: getCities,
+  getCities,
 }
 
 export { Query }
