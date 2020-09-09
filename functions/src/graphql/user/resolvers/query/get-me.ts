@@ -2,9 +2,12 @@ import { Ctx, promiseUserNull } from '../../../../types'
 
 const getMe:
   (root: object, args: object, ctx: Ctx) => promiseUserNull
-  = (root, args, ctx) => {
+  = async (root, args, ctx) => {
     console.log('getMeQuery', args)
-    return ctx.models.User.getMe()
+    const me = await ctx.models.User.getMe()
+    console.log({ me })
+    return me
+    // return ctx.models.User.getMe()
   }
 
 export { getMe }

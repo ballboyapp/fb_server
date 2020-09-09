@@ -37,9 +37,12 @@ const setMe:
       email: user.email || '',
       emailVerified: user.emailVerified || false,
       disabled: user.disabled || false,
-      username: user.displayName || '',
-      avatar: user.photoURL || '',
-      ...args, // language, ...
+      profile: {
+        id: user.uid,
+        username: user.displayName || '',
+        avatar: user.photoURL || '',
+        ...args, // language, ...
+      }
     }
 
     return Users.set(id, doc)

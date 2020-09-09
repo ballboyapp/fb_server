@@ -8,8 +8,6 @@ const userTypes = `
     id: ID!
     username: String
     avatar: String
-    #birthdate: Date
-    #gender: Gender
     language: String #Language
     city: String
     country: String
@@ -17,7 +15,7 @@ const userTypes = `
 
   type PrivateUser { # TODO: change name to 'Me'
     id: ID!
-    #createdAt: Date
+    #createdAt: Date // TODO: timestamp
     email: String
     profile: UserProfile
     #formattedAddress: String
@@ -42,7 +40,6 @@ const userTypes = `
   # MUTATIONS
 
   type Mutation {
-    #signup(language: Language!): PrivateUser
     setMe(language: String!): PrivateUser
 
     updateMe(
