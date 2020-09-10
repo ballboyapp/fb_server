@@ -7,9 +7,9 @@ const setMe:
   = async (root, args, ctx) => {
     console.log(`setMeMutation args: ${JSON.stringify(args)}, ctx: ${JSON.stringify(ctx)} !!!!`)
 
-    await ctx.models.User.setMe(args)
+    await ctx.models.Me.setMe(args)
 
-    const user = await ctx.models.User.getMe()
+    const user = await ctx.models.Me.getMe()
 
     // TODO: or use listener?
     // // Register user on NotificationsList

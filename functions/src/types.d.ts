@@ -18,7 +18,7 @@ interface Id {
 }
 
 interface User extends Id { }
-// TODO: should we use Me as well? interfact Me extends User
+interface Me extends User { }
 
 interface City extends Id {
   name: string
@@ -30,10 +30,10 @@ type promiseCityNull = Promise<City | null>
 type promiseCities = Promise<City[]>
 
 interface CtxMe {
-  me: User | null,
+  me: Me | null,
 }
 
-type userModel = {
+type meModel = {
   setMe: (args: object) => promiseWrite,
   getMe: () => promiseUserNull,
   updateMe: (args: object) => promiseWrite,
@@ -45,7 +45,7 @@ type cityModel = {
 
 interface CtxModels {
   models: {
-    User: userModel,
+    Me: meModel,
     City: cityModel,
   },
 }
@@ -64,7 +64,7 @@ export {
   promiseCityNull,
   promiseCities,
   CtxMe,
-  userModel,
+  meModel,
   cityModel,
   CtxModels,
   Ctx,

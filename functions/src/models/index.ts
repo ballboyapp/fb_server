@@ -1,4 +1,4 @@
-import { genUserModel } from './user'
+import { genMeModel } from './me'
 import { genCityModel } from './city'
 // const genSpotModel = require('./spot');
 // const genActivityModel = require('./activity');
@@ -6,7 +6,7 @@ import { genCityModel } from './city'
 // const genChatRoomsModel = require('./chat-rooms');
 
 export {
-  genUserModel,
+  genMeModel,
   genCityModel,
 }
 

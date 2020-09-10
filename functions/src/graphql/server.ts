@@ -5,7 +5,7 @@ import { typeDefs } from './type-defs'
 import { resolvers } from './resolvers'
 // import { Users } from '../db'
 import {
-  genUserModel,
+  genMeModel,
   genCityModel,
   // genSpotModel,
   // genActivityModel,
@@ -32,7 +32,7 @@ const gqlServer = (app: Express): void => {
       return {
         me,
         models: {
-          User: genUserModel({ me }),
+          Me: genMeModel({ me }),
           City: genCityModel({ me }),
           // Spot: genSpotModel({ me }),
           // Activity: genActivityModel({ me }),
