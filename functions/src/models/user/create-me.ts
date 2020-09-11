@@ -2,11 +2,11 @@ import { auth } from 'firebase-admin'
 import { CtxMe, promiseWrite } from '../../types'
 import { Users } from '../../db'
 
-const setMe:
+const createMe:
   (ctxMe: CtxMe, args: object) => promiseWrite
   = async (ctxMe, args) => {
     const id = ctxMe?.me?.id
-    console.log(`setMe model id: ${id}, ctxMe: ${JSON.stringify(ctxMe)}`)
+    console.log(`createMe model id: ${id}, ctxMe: ${JSON.stringify(ctxMe)}`)
 
     // Only allow owner to update its own data
     if (id == null) {
@@ -32,6 +32,7 @@ const setMe:
     }
 
     // Insert user in DB
+    // What about adding public user id?
     const doc = {
       id: user.uid,
       email: user.email || '',
@@ -48,4 +49,4 @@ const setMe:
     return Users.set(id, doc)
   }
 
-export { setMe }
+export { createMe }

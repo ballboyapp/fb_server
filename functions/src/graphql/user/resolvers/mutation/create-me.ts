@@ -2,12 +2,12 @@
 import { Ctx, promiseUserNull } from '../../../../types'
 
 
-const setMe:
+const createMe:
   (root: object, args: object, ctx: Ctx) => promiseUserNull
   = async (root, args, ctx) => {
-    console.log(`setMeMutation args: ${JSON.stringify(args)}, ctx: ${JSON.stringify(ctx)} !!!!`)
+    console.log(`createMeMutation args: ${JSON.stringify(args)}, ctx: ${JSON.stringify(ctx)} !!!!`)
 
-    await ctx.models.User.setMe(args)
+    await ctx.models.User.createMe(args)
 
     const user = await ctx.models.User.getMe()
 
@@ -26,4 +26,4 @@ const setMe:
     return user
   }
 
-export { setMe }
+export { createMe }

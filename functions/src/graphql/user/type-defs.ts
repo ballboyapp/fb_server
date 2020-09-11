@@ -25,7 +25,6 @@ const userTypes = `
     profile: Profile
   }
 
-
   # INPUTS
 
   # QUERIES
@@ -37,7 +36,7 @@ const userTypes = `
   # MUTATIONS
 
   type Mutation {
-    setMe(language: String!): Me
+    createMe(language: String!): Me
 
     updateMe(
       username: String,

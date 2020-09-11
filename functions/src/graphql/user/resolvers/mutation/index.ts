@@ -1,8 +1,8 @@
-import { setMe } from './set-me'
+import { createMe } from './create-me'
 import { updateMe } from './update-me'
 
 const Mutation = {
-  setMe,
+  createMe,
   updateMe,
 }
 

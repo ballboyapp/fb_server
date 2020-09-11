@@ -34,7 +34,7 @@ interface CtxMe {
 }
 
 type userModel = {
-  setMe: (args: object) => promiseWrite,
+  createMe: (args: object) => promiseWrite,
   getMe: () => promiseUserNull,
   updateMe: (args: object) => promiseWrite,
 }
