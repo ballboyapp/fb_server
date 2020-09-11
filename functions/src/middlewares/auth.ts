@@ -1,70 +1,52 @@
-import { Request, Response, NextFunction } from 'express';
-import admin from 'firebase-admin';
-
-// https://stackoverflow.com/questions/58200432/argument-of-type-req-request-res-iresponse-next-nextfunction-void-is
-declare module 'express-serve-static-core' {
-  interface Request {
-    user: null | {
-      id: admin.auth.DecodedIdToken,
-    };
-  }
-}
+import { Request, Response, NextFunction } from 'express'
+import admin from 'firebase-admin'
 
 // Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
 // `Authorization: Bearer <Firebase ID Token>`.
 // when decoded successfully, the ID Token content will be added as `req.user`.
-const auth = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> => {
-  console.log('Check if request is authorized with Firebase ID token');
+const auth = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  console.log('Check if request is authorized with Firebase ID token')
 
   if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) &&
-      !(req.cookies && req.cookies.__session)) {
+    !(req.cookies && req.cookies.__session)) {
     console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.',
-        'Make sure you authorize your request by providing the following HTTP header:',
-        'Authorization: Bearer <Firebase ID Token>',
-        'or by passing a "__session" cookie.');
-    // res.status(403).send('Unauthorized');
-    req.user = null;
-    next();
-    return;
+      'Make sure you authorize your request by providing the following HTTP header:',
+      'Authorization: Bearer <Firebase ID Token>',
+      'or by passing a "__session" cookie.')
+    req.user = null
+    next()
+    return
   }
 
-  let idToken;
+  let idToken
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
-    console.log('Found "Authorization" header');
+    console.log('Found "Authorization" header')
     // Read the ID Token from the Authorization header.
-    idToken = req.headers.authorization.split('Bearer ')[1];
-  } else if(req.cookies) {
-    console.log('Found "__session" cookie');
+    idToken = req.headers.authorization.split('Bearer ')[1]
+  } else if (req.cookies) {
+    console.log('Found "__session" cookie')
     // Read the ID Token from cookie.
-    idToken = req.cookies.__session;
+    idToken = req.cookies.__session
   } else {
     // No cookie
-    // res.status(403).send('Unauthorized');
-    req.user = null;
-    next();
-    return;
+    req.user = null
+    next()
+    return
   }
 
   try {
-    const decodedIdToken = await admin.auth().verifyIdToken(idToken);
-    console.log('ID Token correctly decoded', decodedIdToken);
-    req.user = {
-      id: decodedIdToken
-    };
-    next();
-    return;
+    const decodedIdToken = await admin.auth().verifyIdToken(idToken)
+    // console.log('ID Token correctly decoded', decodedIdToken)
+    req.user = decodedIdToken
+    next()
+    return
   } catch (error) {
-    console.error('Error while verifying Firebase ID token:', error);
-    // res.status(403).send('Unauthorized');
-    req.user = null;
-    next();
-    return;
+    console.error('Error while verifying Firebase ID token:', error)
+    req.user = null
+    next()
+    return
   }
-};
+}
 
 export { auth }

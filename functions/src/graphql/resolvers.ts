@@ -1,7 +1,10 @@
-const resolverFunctions = {
-  Query: {
-    hello: () => 'world'
-  }
-};
+import { mergeResolvers } from '@graphql-tools/merge'
+import { userResolvers } from './user/resolvers'
+import { cityResolvers } from './city/resolvers'
 
-export default resolverFunctions;
+const resolvers = mergeResolvers([
+  userResolvers,
+  cityResolvers,
+])
+
+export { resolvers }

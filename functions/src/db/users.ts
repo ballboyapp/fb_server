@@ -1,34 +1,67 @@
 import admin from 'firebase-admin'
-import { IUser } from '../types'
+import { spreadDoc } from './utils'
+import { promiseWrite, promiseUserNull } from '../types'
 
 const db = admin.firestore()
 
-//-----------------------------------------------------------------------------
-/**
- * Get user for the given id
- * @param {String} userId
- * @returns {Promise}
- */
-const getUserById = async (userId: string): Promise<IUser | null> => {
-  if (userId == null) {
-    throw new Error('getUserById userId is required')
+class Users {
+  /**
+   * Set user for the given id
+   */
+  static set: (id: string, doc: object) => promiseWrite = (id, doc) => {
+    if (id == null || doc == null) {
+      throw new Error('Bad request')
+    }
+
+    return db.collection('users')
+      .doc(id)
+      .set(doc)
   }
 
-  const snap = await db.collection('users')
-    .where('id', '==', userId)
-    .limit(1)
-    .get()
+  /**
+   * Query user for the given id
+   */
+  static getById: (id: string) => promiseUserNull = async (id) => {
+    if (id == null) {
+      throw new Error('Bad request')
+    }
 
-  if (snap == null || snap.empty) {
-    return null
+    const doc = await db.collection('users')
+      .doc(id)
+      .get()
+
+    if (doc == null || !doc.exists) {
+      return null
+    }
+
+    return spreadDoc(doc)
   }
 
-  const doc = snap.docs[0]
+  /**
+   * Query random user
+   */
+  static getOne: () => promiseUserNull = async () => {
+    const snap = await db.collection('users')
+      .limit(1)
+      .get()
 
-  return { id: doc.id, ...doc.data() }
-}
-//-----------------------------------------------------------------------------
+    if (snap == null || snap.empty) {
+      return null
+    }
 
-export {
-  getUserById,
+    const doc = snap.docs[0]
+
+    return spreadDoc(doc)
+  }
+
+  /**
+   * Update user for the given id
+   */
+  static update: (id: string, fields: object) => promiseWrite = (id, fields) => (
+    db.collection('users')
+      .doc(id)
+      .update(fields)
+  )
 }
+
+export { Users }
