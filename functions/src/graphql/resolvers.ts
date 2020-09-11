@@ -1,9 +1,9 @@
 import { mergeResolvers } from '@graphql-tools/merge'
-import { meResolvers } from './me/resolvers'
+import { userResolvers } from './user/resolvers'
 import { cityResolvers } from './city/resolvers'
 
 const resolvers = mergeResolvers([
-  meResolvers,
+  userResolvers,
   cityResolvers,
 ])
 

@@ -1,10 +1,10 @@
 // See: https://github.com/graphql/graphql-js/issues/703
-const meTypes = `
+const userTypes = `
   # ENUMS
 
   # TYPES
 
-  type UserProfile {
+  type Profile {
     id: ID!
     username: String
     avatar: String
@@ -13,17 +13,18 @@ const meTypes = `
     country: String
   }
 
-  type Me {
+  type User {
     id: ID!
-    #createdAt: Date // TODO: timestamp
-    email: String
-    profile: UserProfile
+    profile: Profile
   }
 
-  #type User {
-  #  id: ID!
-  #  profile: UserProfile
-  #}
+  type Me {
+    id: ID!
+    #createdAt: Date // TODO: creationTime
+    email: String
+    profile: Profile
+  }
+
 
   # INPUTS
 
@@ -48,4 +49,4 @@ const meTypes = `
   }
 `
 
-export { meTypes }
+export { userTypes }

@@ -1,9 +1,9 @@
-const { mergeTypeDefs } = require('@graphql-tools/merge')
-const { meTypes } = require('./me/type-defs')
-const { cityTypes } = require('./city/type-defs')
+import { mergeTypeDefs } from '@graphql-tools/merge'
+import { userTypes } from './user/type-defs'
+import { cityTypes } from './city/type-defs'
 
 const typeDefs = mergeTypeDefs([
-  meTypes,
+  userTypes,
   cityTypes,
 ])
 

@@ -5,9 +5,9 @@ const updateMe:
   = async (root, args, ctx) => {
     console.log('updateMeMutation', args)
 
-    await ctx.models.Me.updateMe(args)
+    await ctx.models.User.updateMe(args)
 
-    return ctx.models.Me.getMe()
+    return ctx.models.User.getMe()
   }
 
 export { updateMe }

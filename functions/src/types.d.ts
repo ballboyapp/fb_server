@@ -33,7 +33,7 @@ interface CtxMe {
   me: Me | null,
 }
 
-type meModel = {
+type userModel = {
   setMe: (args: object) => promiseWrite,
   getMe: () => promiseUserNull,
   updateMe: (args: object) => promiseWrite,
@@ -45,7 +45,7 @@ type cityModel = {
 
 interface CtxModels {
   models: {
-    Me: meModel,
+    User: userModel,
     City: cityModel,
   },
 }
@@ -64,7 +64,7 @@ export {
   promiseCityNull,
   promiseCities,
   CtxMe,
-  meModel,
+  userModel,
   cityModel,
   CtxModels,
   Ctx,

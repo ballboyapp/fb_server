@@ -1,14 +1,14 @@
-import { CtxMe, meModel } from '../../types'
+import { CtxMe, userModel } from '../../types'
 import { setMe } from './set-me'
 import { getMe } from './get-me'
 import { updateMe } from './update-me'
 
-const genMeModel:
-  (ctxMe: CtxMe) => meModel
+const genUserModel:
+  (ctxMe: CtxMe) => userModel
   = (ctxMe) => ({
     setMe: (args: object) => setMe(ctxMe, args),
     getMe: () => getMe(ctxMe),
     updateMe: (args: object) => updateMe(ctxMe, args),
   })
 
-export { genMeModel }
+export { genUserModel }
