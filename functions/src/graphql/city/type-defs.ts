@@ -17,7 +17,7 @@ const cityTypes = `
   # QUERIES
 
   type Query {
-    getCities: [City]
+    cities: [City]
   }
 
   # MUTATIONS
