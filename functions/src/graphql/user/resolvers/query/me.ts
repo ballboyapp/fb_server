@@ -1,10 +1,8 @@
 import { Ctx, promiseUserNull } from '../../../../types'
 
-const me:
+export const me:
   (root: object, args: object, ctx: Ctx) => promiseUserNull
   = (root, args, ctx) => {
     console.log('meQuery', args)
     return ctx.models.User.getMe()
   }
-
-export { me }

@@ -13,8 +13,7 @@ import {
   // genChatRoomsModel,
 } from '../models'
 
-
-const gqlServer = (app: Express): void => {
+export const gqlServer = (app: Express): void => {
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
@@ -47,5 +46,3 @@ const gqlServer = (app: Express): void => {
 
   apolloServer.applyMiddleware({ app, path: '/' })
 }
-
-export { gqlServer }

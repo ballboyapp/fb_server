@@ -2,7 +2,7 @@ import { auth } from 'firebase-admin'
 import { CtxMe, promiseWrite } from '../../types'
 import { Users } from '../../db'
 
-const createMe:
+export const createMe:
   (ctxMe: CtxMe, args: object) => promiseWrite
   = async (ctxMe, args) => {
     const id = ctxMe?.me?.id
@@ -33,6 +33,7 @@ const createMe:
 
     // Insert user in DB
     // What about adding public user id?
+    // TODO: cityId is required
     const doc = {
       id: user.uid,
       email: user.email || '',
@@ -48,5 +49,3 @@ const createMe:
 
     return Users.set(id, doc)
   }
-
-export { createMe }

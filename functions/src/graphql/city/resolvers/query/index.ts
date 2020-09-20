@@ -1,7 +1,5 @@
 import { cities } from './cities'
 
-const Query = {
+export const Query = {
   cities,
 }
-
-export { Query }

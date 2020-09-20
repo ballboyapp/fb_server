@@ -1,5 +1,5 @@
 // See: https://github.com/graphql/graphql-js/issues/703
-const userTypes = `
+export const userTypes = `
   # ENUMS
 
   # TYPES
@@ -8,9 +8,8 @@ const userTypes = `
     id: ID!
     username: String
     avatar: String
-    language: String #Language
-    city: String
-    country: String
+    language: String
+    cityId: ID!
   }
 
   type User {
@@ -36,16 +35,14 @@ const userTypes = `
   # MUTATIONS
 
   type Mutation {
+    # TODO: pass cityId
     createMe(language: String!): Me
 
     updateMe(
       username: String,
-      city: String,
-      country: String,
+      cityId: String,
     ): Me
 
     # TODO: deleteMe
   }
 `
-
-export { userTypes }

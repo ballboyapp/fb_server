@@ -8,64 +8,46 @@ declare module 'express-serve-static-core' {
   }
 }
 
-type promiseWrite = Promise<admin.firestore.WriteResult>
-type promiseDocReference = Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>>
-type queryDocData = admin.firestore.QueryDocumentSnapshot<admin.firestore.DocumentData>
-type docData = admin.firestore.DocumentSnapshot<admin.firestore.DocumentData>
+export type promiseWrite = Promise<admin.firestore.WriteResult>
+export type promiseDocReference = Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>>
+export type queryDocData = admin.firestore.QueryDocumentSnapshot<admin.firestore.DocumentData>
+export type docData = admin.firestore.DocumentSnapshot<admin.firestore.DocumentData>
 
-interface Id {
+export interface Id {
   id: string
 }
 
-interface User extends Id { }
-interface Me extends User { }
+export interface User extends Id { }
+export interface Me extends User { }
 
-interface City extends Id {
+export interface City extends Id {
   name: string
   country: string
 }
 
-type promiseUserNull = Promise<User | null>
-type promiseCityNull = Promise<City | null>
-type promiseCities = Promise<City[]>
+export type promiseUserNull = Promise<User | null>
+export type promiseCityNull = Promise<City | null>
+export type promiseCities = Promise<City[]>
 
-interface CtxMe {
+export interface CtxMe {
   me: Me | null,
 }
 
-type userModel = {
+export type userModel = {
   createMe: (args: object) => promiseWrite,
   getMe: () => promiseUserNull,
   updateMe: (args: object) => promiseWrite,
 }
 
-type cityModel = {
+export type cityModel = {
   getCities: () => promiseCities,
 }
 
-interface CtxModels {
+export interface CtxModels {
   models: {
     User: userModel,
     City: cityModel,
   },
 }
 
-interface Ctx extends CtxMe, CtxModels { }
-
-export {
-  promiseWrite,
-  promiseDocReference,
-  queryDocData,
-  docData,
-  Id,
-  User,
-  City,
-  promiseUserNull,
-  promiseCityNull,
-  promiseCities,
-  CtxMe,
-  userModel,
-  cityModel,
-  CtxModels,
-  Ctx,
-}
+export interface Ctx extends CtxMe, CtxModels { }

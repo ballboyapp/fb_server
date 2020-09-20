@@ -1,3 +1,1 @@
-const Me = {}
-
-export { Me }
+export const Me = {}

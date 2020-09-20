@@ -43,8 +43,4 @@ gqlServer(app)
 
 // Graphql api
 // https://us-central1-<project-name>.cloudfunctions.net/graphql/
-const graphql = https.onRequest(app)
-
-export {
-  graphql,
-}
+export const graphql = https.onRequest(app)

@@ -1,3 +1,1 @@
-const City = {}
-
-export { City }
+export const City = {}

@@ -1,3 +1,1 @@
-const Mutation = {}
-
-export { Mutation }
+export const Mutation = {}

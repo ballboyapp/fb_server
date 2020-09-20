@@ -1,6 +1,6 @@
 import { Ctx, promiseUserNull } from '../../../../types'
 
-const updateMe:
+export const updateMe:
   (root: object, args: object, ctx: Ctx) => promiseUserNull
   = async (root, args, ctx) => {
     console.log('updateMeMutation', args)
@@ -9,5 +9,3 @@ const updateMe:
 
     return ctx.models.User.getMe()
   }
-
-export { updateMe }
