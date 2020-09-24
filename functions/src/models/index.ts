@@ -1,6 +1,6 @@
 import { genUserModel } from './user'
 import { genCityModel } from './city'
-// const genSpotModel = require('./spot');
+import { genSpotModel } from './spot'
 // const genActivityModel = require('./activity');
 // const genNotificationsListModel = require('./notifications-list');
 // const genChatRoomsModel = require('./chat-rooms');
@@ -8,9 +8,9 @@ import { genCityModel } from './city'
 export {
   genUserModel,
   genCityModel,
+  genSpotModel,
 }
 
-//   // genSpotModel,
 //   // genActivityModel,
 //   // genNotificationsListModel,
 //   // genChatRoomsModel,

@@ -1,57 +1,58 @@
 import admin from 'firebase-admin'
-import { spreadDoc } from './utils'
 import {
   City,
   promiseDocReference,
   promiseCityNull,
   promiseCities,
 } from '../types'
+import { spreadDoc } from './utils'
 
 const db = admin.firestore()
+const collection = db.collection('cities')
 
-class Cities {
+export class Cities {
   /**
    * Add a new city
    */
-  static add: (doc: object) => promiseDocReference = (doc) => {
-    if (doc == null) {
-      throw new Error('Bad request')
-    }
+  static add
+    : (doc: object) => promiseDocReference
+    = (doc) => {
+      if (doc == null) {
+        throw new Error('Bad request')
+      }
 
-    return db.collection('cities')
-      .add(doc)
-  }
+      return collection.add(doc)
+    }
 
   /**
    * Query random city
    */
-  static getOne: () => promiseCityNull = async () => {
-    const snap = await db.collection('cities')
-      .limit(1)
-      .get()
+  static getOne
+    : () => promiseCityNull
+    = async () => {
+      const snap = await collection.limit(1).get()
 
-    if (snap == null || snap.empty) {
-      return null
+      if (snap == null || snap.empty) {
+        return null
+      }
+
+      const doc = snap.docs[0]
+
+      return spreadDoc(doc) as City
     }
-
-    const doc = snap.docs[0]
-
-    return spreadDoc(doc) as City
-  }
 
   /**
    * Query all cities
    */
-  static getAll: () => promiseCities = async () => {
-    const snap = await db.collection('cities')
-      .get()
+  static getAll
+    : () => promiseCities
+    = async () => {
+      const snap = await collection.get()
 
-    if (snap == null || snap.empty) {
-      return []
+      if (snap == null || snap.empty) {
+        return []
+      }
+
+      return snap.docs.map((doc) => spreadDoc(doc) as City)
     }
-
-    return snap.docs.map((doc) => spreadDoc(doc) as City)
-  }
 }
-
-export { Cities }

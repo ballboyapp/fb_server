@@ -7,7 +7,7 @@ import { resolvers } from './resolvers'
 import {
   genUserModel,
   genCityModel,
-  // genSpotModel,
+  genSpotModel,
   // genActivityModel,
   // genNotificationsListModel,
   // genChatRoomsModel,
@@ -33,7 +33,7 @@ export const gqlServer = (app: Express): void => {
         models: {
           User: genUserModel({ me }),
           City: genCityModel({ me }),
-          // Spot: genSpotModel({ me }),
+          Spot: genSpotModel({ me }),
           // Activity: genActivityModel({ me }),
           // NotificationsList: genNotificationsListModel({ me }),
           // ChatRooms: genChatRoomsModel({ me }),

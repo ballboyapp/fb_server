@@ -35,8 +35,10 @@ export const userTypes = `
   # MUTATIONS
 
   type Mutation {
-    # TODO: pass cityId
-    createMe(language: String!): Me
+    createMe(
+      language: String!,
+      cityId: ID!,
+    ): Me
 
     updateMe(
       username: String,
