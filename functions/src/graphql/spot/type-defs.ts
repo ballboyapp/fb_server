@@ -9,7 +9,7 @@ export const spotTypes = `
     cityId: ID!
     spotname: String
     address: String
-    location: Coordinates
+    coordinates: Coordinates
     images: [String]
     sports: [Sport]
     #activities(limit: Int!, offset: Int!): [Activity]

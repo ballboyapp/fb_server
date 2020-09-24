@@ -5,6 +5,7 @@ import {
   promiseSpotNull,
   promiseSpots,
   SpotsInput,
+  promiseDocReference,
 } from '../types'
 import { spreadDoc } from './utils'
 
@@ -14,6 +15,19 @@ const collection = db.collection('spots')
 const MAX_LIMIT = 20
 
 export class Spots {
+  /**
+   * Add new spot
+   */
+  static add
+    : (doc: object) => promiseDocReference
+    = (doc) => {
+      if (doc == null) {
+        throw new Error('Bad request')
+      }
+
+      return collection.add(doc)
+    }
+
   /**
    * Set spot for the given id
    */
