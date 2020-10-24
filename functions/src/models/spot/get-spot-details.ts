@@ -1,9 +1,9 @@
-import { SpotDeatilsInput, promiseSpotNull } from '../../types'
+import { SpotDetailsInput, promiseSpotNull } from '../../types'
 import { Spots } from '../../db'
 
 export const getSpotDetails
-  : (args: SpotDeatilsInput) => promiseSpotNull
-  = async ({
+  : (args: SpotDetailsInput) => promiseSpotNull
+  = ({
     id,
   }) => {
     if (id == null) {

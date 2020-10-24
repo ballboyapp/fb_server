@@ -1,7 +1,7 @@
 export const commonTypes = `
   # SCALARS
 
-  #scalar Date
+  scalar Date
 
   # ENUMS
 

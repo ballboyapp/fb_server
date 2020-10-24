@@ -8,7 +8,7 @@ import {
   genUserModel,
   genCityModel,
   genSpotModel,
-  // genActivityModel,
+  genActivityModel,
   // genNotificationsListModel,
   // genChatRoomsModel,
 } from '../models'
@@ -24,6 +24,7 @@ export const gqlServer = (app: Express): void => {
       //   ? await Users.getById(req.user.uid)
       //   : null
       const me = req?.user?.uid ? { id: req?.user?.uid } : null
+      // ^ Me might not exist at this point
       // TODO: disable in production
       // const me = await Users.getOne()
       // console.log({ loggedInUser: get(me, 'profile.username', 'unknown') });
@@ -34,7 +35,7 @@ export const gqlServer = (app: Express): void => {
           User: genUserModel({ me }),
           City: genCityModel({ me }),
           Spot: genSpotModel({ me }),
-          // Activity: genActivityModel({ me }),
+          Activity: genActivityModel({ me }),
           // NotificationsList: genNotificationsListModel({ me }),
           // ChatRooms: genChatRoomsModel({ me }),
         },

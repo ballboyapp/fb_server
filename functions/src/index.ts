@@ -5,7 +5,7 @@ import { https } from 'firebase-functions'
 import cors from 'cors'
 import { auth } from './middlewares'
 import { gqlServer } from './graphql/server'
-export { spotsFixture } from './fixtures/spots'
+// export { spotsFixture } from './fixtures/spots'
 
 // // TODO
 // const { CLIENT_URL } = process.env
