@@ -135,7 +135,7 @@ export interface CreateActivityInput {
 }
 
 export type activityModel = {
-  createActivity: (args: CreateActivityInput) => promiseDocReference,
+  createActivity: (args: CreateActivityInput) => Promise<string | null>,
   getActivityDetails: (args: ActivityDetailsInput) => promiseActivityNull,
 }
 

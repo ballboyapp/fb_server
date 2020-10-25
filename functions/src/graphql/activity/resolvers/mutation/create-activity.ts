@@ -1,11 +1,18 @@
 // const { ChatRooms } = require('../../../../models');
-import { Ctx, CreateActivityInput, promiseDocReference } from '../../../../types'
+import { Ctx, CreateActivityInput, promiseActivityNull } from '../../../../types'
 
 export const createActivity
-  : (root: object, args: CreateActivityInput, ctx: Ctx) => promiseDocReference
-  = async (root, args, ctx) => {
-    // console.log('createActivityMutation', args, ctx);
-    const activity = await ctx.models.Activity.createActivity(args)
+  : (root: object, args: { args: CreateActivityInput }, ctx: Ctx) => promiseActivityNull
+  = async (root, { args }, ctx) => {
+    console.log('createActivityMutation', args, ctx)
+    const activityId = await ctx.models.Activity.createActivity(args)
+    console.log({ activityId })
+
+    if (activityId == null) {
+      throw new Error('Error creating activity')
+    }
+
+    const activity = await ctx.models.Activity.getActivityDetails({ id: activityId })
     // TODO: send notifications
     // TODO: create shareLink
 
