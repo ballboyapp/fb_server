@@ -2,6 +2,7 @@
 import { Ctx, CreateActivityInput, promiseActivityNull } from '../../../../types'
 
 export const createActivity
+  // TODO: look for a better name: args: { params/fields }
   : (root: object, args: { args: CreateActivityInput }, ctx: Ctx) => promiseActivityNull
   = async (root, { args }, ctx) => {
     console.log('createActivityMutation', args, ctx)

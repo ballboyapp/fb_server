@@ -40,7 +40,6 @@ export const activityTypes = `
   # INPUTS
   input activitiesInput {
     sports: [Sport]
-    #distance: Float
     offset: Int!
     limit: Int!
   }

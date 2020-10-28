@@ -85,12 +85,19 @@ export interface ActivityDetailsInput {
   id: string
 }
 
+export interface ActivitiesInput {
+  sports: Sport[]
+  offset: number
+  limit: number
+}
+
 export type promiseUserNull = Promise<User | null>
 export type promiseCityNull = Promise<City | null>
 export type promiseSpotNull = Promise<Spot | null>
 export type promiseActivityNull = Promise<Activity | null>
 export type promiseCities = Promise<City[]>
 export type promiseSpots = Promise<Spot[]>
+export type promiseActivities = Promise<Activity[]>
 
 export interface CtxMe {
   me: Me | null,
@@ -136,6 +143,7 @@ export interface CreateActivityInput {
 
 export type activityModel = {
   createActivity: (args: CreateActivityInput) => Promise<string | null>,
+  getActivities: (args: ActivitiesInput) => promiseActivities,
   getActivityDetails: (args: ActivityDetailsInput) => promiseActivityNull,
 }
 

@@ -1,10 +1,10 @@
 import admin from 'firebase-admin'
 import {
   Activity,
+  ActivitiesInput,
   promiseWrite,
   promiseActivityNull,
-  // promiseActivities,
-  // CreateActivityInput,
+  promiseActivities,
   promiseDocReference,
 } from '../types'
 import { spreadDoc } from './utils'
@@ -12,7 +12,7 @@ import { spreadDoc } from './utils'
 const db = admin.firestore()
 const collection = db.collection('activities')
 
-// const MAX_LIMIT = 20
+const MAX_LIMIT = 20
 
 export class Activities {
   /**
@@ -80,29 +80,29 @@ export class Activities {
   /**
    * Query activities
    */
-  // static getByCitySports
-  //   : (args: SpotsInput) => promiseSpots
-  //   = async (args) => {
-  //     const {
-  //       cityId,
-  //       sports,
-  //       offset,
-  //       limit,
-  //     } = args
+  static getBySports
+    : (args: ActivitiesInput) => promiseActivities
+    = async (args) => {
+      const {
+        sports,
+        offset,
+        limit,
+      } = args
 
-  //     const snap = await collection
-  //       .where('cityId', '==', cityId)
-  //       .where('sports', 'array-contains-any', sports)
-  //       .offset(offset)
-  //       .limit(Math.min(limit, MAX_LIMIT))
-  //       .get()
+      const snap = await collection
+        .where('sports', 'array-contains-any', sports)
+        .where('status', 'array-contains-any', [ACTIVITY_STATUSES.ACTIVE, ACTIVITY_STATUSES.CANCELED])
+        .offset(offset)
+        .orderBy('dateTime', 'asc')
+        .limit(Math.min(limit, MAX_LIMIT))
+        .get()
 
-  //     if (snap == null || snap.empty) {
-  //       return []
-  //     }
+      if (snap == null || snap.empty) {
+        return []
+      }
 
-  //     return snap.docs.map((doc) => spreadDoc(doc) as Spot)
-  //   }
+      return snap.docs.map((doc) => spreadDoc(doc) as Activity)
+    }
 
   /**
    * Update activity for the given id

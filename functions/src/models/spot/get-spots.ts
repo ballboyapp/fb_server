@@ -16,7 +16,7 @@ export const getSpots
       throw new Error('Bad request')
     }
 
-    if (!isNumber(limit) || !isNumber(offset)) {
+    if (!isNumber(offset) || !isNumber(limit)) {
       throw new Error('Bad request')
     }
 
