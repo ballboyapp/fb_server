@@ -17,7 +17,7 @@ export const genActivityModel
     // cancelActivity: args => cancelActivity(ctxMe, args),
     // addAttendee: args => addAttendee(ctxMe, args),
     // removeAttendee: args => removeAttendee(ctxMe, args),
-    getActivities: args => getActivities(ctxMe, args),
+    getActivities: args => getActivities(args),
     // getSpotActivities: args => getSpotActivities(ctxMe, args),
     getActivityDetails: args => getActivityDetails(args),
     // setChatRoomId: args => setChatRoomId(ctxMe, args),
