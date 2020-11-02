@@ -3,8 +3,8 @@ import { Ctx, CreateActivityInput, promiseActivityNull } from '../../../../types
 
 export const createActivity
   // TODO: look for a better name: args: { params/fields }
-  : (root: object, args: { args: CreateActivityInput }, ctx: Ctx) => promiseActivityNull
-  = async (root, { args }, ctx) => {
+  : (root: object, args: CreateActivityInput, ctx: Ctx) => promiseActivityNull
+  = async (root, args, ctx) => {
     console.log('createActivityMutation', args, ctx)
     const activityId = await ctx.models.Activity.createActivity(args)
     console.log({ activityId })
@@ -14,6 +14,7 @@ export const createActivity
     }
 
     const activity = await ctx.models.Activity.getActivityDetails({ id: activityId })
+    console.log('ACTIVITY', activity)
     // TODO: send notifications
     // TODO: create shareLink
 

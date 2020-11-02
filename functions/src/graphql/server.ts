@@ -18,7 +18,7 @@ export const gqlServer = (app: Express): void => {
     typeDefs,
     resolvers,
     context: async ({ req }): Promise<Ctx> => {
-      console.log({ user: req.user })
+      // console.log({ user: req.user })
       // User data is decoded using the auth middleware
       // const me = req?.user?.uid
       //   ? await Users.getById(req.user.uid)

@@ -1,6 +1,6 @@
 import { CtxMe, CreateActivityInput } from '../../types'
+import { ACTIVITY_STATUSES } from '../../constants'
 import { Activities } from '../../db'
-// import { spreadDoc } from '../../db/utils'
 
 export const createActivity
   : (ctxMe: CtxMe, args: CreateActivityInput) => Promise<string | null>
@@ -26,7 +26,13 @@ export const createActivity
       throw new Error('Bad request')
     }
 
-    const res = await Activities.add({ ...args, organizerId: id })
+    const doc = {
+      ...args,
+      organizerId: id,
+      status: ACTIVITY_STATUSES.ACTIVE,
+    }
+
+    const res = await Activities.add(doc)
     console.log('ADD ACTIVITY RES', res)
 
     return res?.id || null

@@ -85,14 +85,14 @@ export class Activities {
     : (args: ActivitiesInput) => promiseActivities
     = async (args) => {
       const {
-        sports,
+        // sports,
         offset,
         limit,
       } = args
 
       const snap = await collection
-        .where('sports', 'array-contains-any', sports)
-        .where('status', 'array-contains-any', [ACTIVITY_STATUSES.ACTIVE, ACTIVITY_STATUSES.CANCELED])
+        // .where('sports', 'array-contains-any', sports)
+        .where('status', 'in', [ACTIVITY_STATUSES.ACTIVE, ACTIVITY_STATUSES.CANCELED])
         .offset(offset)
         .orderBy('dateTime', 'asc')
         .limit(Math.min(limit, MAX_LIMIT))

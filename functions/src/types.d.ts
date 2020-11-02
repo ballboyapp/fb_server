@@ -86,7 +86,7 @@ export interface ActivityDetailsInput {
 }
 
 export interface ActivitiesInput {
-  sports: Sport[]
+  sports?: Sport[]
   offset: number
   limit: number
 }

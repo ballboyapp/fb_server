@@ -38,56 +38,51 @@ export const activityTypes = `
   }
 
   # INPUTS
-  input activitiesInput {
-    sports: [Sport]
-    offset: Int!
-    limit: Int!
-  }
-
-  input activityDetailsInput {
-    id: ID!
-  }
-
-  input createActivityInput {
-    sport: Sport!
-    dateTime: String!
-    duration: Int
-    capacity: Int
-    spotId: ID!
-    title: String!
-    description: String
-    repeatFrequency: Int
-  }
-
-  input updateActivityInput {
-    id: ID!
-    dateTime: String!
-    duration: Int
-    capacity: Int
-    spotId: ID!
-    title: String!
-    description: String
-    repeatFrequency: Int
-  }
-
-  input cancelActivityInput {
-    id: ID!
-    msg: String
-  }
 
   # QUERIES
 
   type Query {
-    activities(args: activitiesInput): [Activity]
-    activityDetails(args: activityDetailsInput): Activity
+    activities(
+      sports: [Sport],
+      offset: Int!,
+      limit: Int!,
+    ): [Activity]
+
+    activityDetails(
+      id: ID!,
+    ): Activity
   }
 
   # MUTATIONS
 
   type Mutation {
-    createActivity(args: createActivityInput): Activity
-    #updateActivity(args: updateActivityInput): Activity
-    #cancelActivity(args: cancelActivityInput): Activity
+    createActivity(
+      sport: Sport!,
+      dateTime: String!,
+      duration: Int,
+      capacity: Int,
+      spotId: ID!,
+      title: String!,
+      description: String,
+      repeatFrequency: Int,
+    ): Activity
+
+    #updateActivity(
+    #  id: ID!,
+    #  dateTime: String!,
+    #  duration: Int,
+    #  capacity: Int,
+    #  spotId: ID!,
+    #  title: String!,
+    #  description: String,
+    #  repeatFrequency: Int,
+    #): Activity
+
+    #cancelActivity(
+    #  id: ID!,
+    #  msg: String,
+    #): Activity
+
     #deleteActivity
     #addAttendee(_id: ID!): Activity
     #removeAttendee(_id: ID!): Activity
