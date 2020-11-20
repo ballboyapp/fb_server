@@ -1,3 +1,1 @@
-const User = {}
-
-export { User }
+export const User = {}

@@ -1,9 +1,7 @@
 import { createMe } from './create-me'
 import { updateMe } from './update-me'
 
-const Mutation = {
+export const Mutation = {
   createMe,
   updateMe,
 }
-
-export { Mutation }

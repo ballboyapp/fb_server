@@ -3,7 +3,7 @@ import { Users } from '../../db'
 
 type fn = (ctxMe: CtxMe, args: object) => promiseWrite
 
-const updateMe: fn = async (ctxMe, args) => {
+export const updateMe: fn = async (ctxMe, args) => {
   const id = ctxMe?.me?.id
 
   // Only allow owner to update its own data
@@ -17,5 +17,3 @@ const updateMe: fn = async (ctxMe, args) => {
 
   return Users.update(id, args)
 }
-
-export { updateMe }

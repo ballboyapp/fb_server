@@ -1,7 +1,5 @@
 import { me } from './me'
 
-const Query = {
+export const Query = {
   me,
 }
-
-export { Query }

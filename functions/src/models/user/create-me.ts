@@ -2,11 +2,10 @@ import { auth } from 'firebase-admin'
 import { CtxMe, promiseWrite } from '../../types'
 import { Users } from '../../db'
 
-const createMe:
-  (ctxMe: CtxMe, args: object) => promiseWrite
+export const createMe
+  : (ctxMe: CtxMe, args: object) => promiseWrite
   = async (ctxMe, args) => {
     const id = ctxMe?.me?.id
-    console.log(`createMe model id: ${id}, ctxMe: ${JSON.stringify(ctxMe)}`)
 
     // Only allow owner to update its own data
     if (id == null) {
@@ -18,9 +17,9 @@ const createMe:
     }
 
     // Make sure user doesn't exist already
-    const exists = (await Users.getById(id)) != null
+    const existingUser = await Users.getById(id)
 
-    if (exists) {
+    if (existingUser != null) {
       throw new Error('Bad request')
     }
 
@@ -31,7 +30,6 @@ const createMe:
       throw new Error('Bad request')
     }
 
-    // Insert user in DB
     // What about adding public user id?
     const doc = {
       id: user.uid,
@@ -42,11 +40,9 @@ const createMe:
         id: user.uid,
         username: user.displayName || '',
         avatar: user.photoURL || '',
-        ...args, // language, ...
+        ...args, // language, cityId, ...
       }
     }
 
     return Users.set(id, doc)
   }
-
-export { createMe }

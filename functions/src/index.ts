@@ -5,6 +5,7 @@ import { https } from 'firebase-functions'
 import cors from 'cors'
 import { auth } from './middlewares'
 import { gqlServer } from './graphql/server'
+// export { spotsFixture } from './fixtures/spots'
 
 // // TODO
 // const { CLIENT_URL } = process.env
@@ -43,8 +44,4 @@ gqlServer(app)
 
 // Graphql api
 // https://us-central1-<project-name>.cloudfunctions.net/graphql/
-const graphql = https.onRequest(app)
-
-export {
-  graphql,
-}
+export const graphql = https.onRequest(app)

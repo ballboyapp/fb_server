@@ -1,67 +1,66 @@
 import admin from 'firebase-admin'
+import { User, promiseWrite, promiseUserNull } from '../types'
 import { spreadDoc } from './utils'
-import { promiseWrite, promiseUserNull } from '../types'
 
 const db = admin.firestore()
+const collection = db.collection('users')
 
-class Users {
+export class Users {
   /**
    * Set user for the given id
    */
-  static set: (id: string, doc: object) => promiseWrite = (id, doc) => {
-    if (id == null || doc == null) {
-      throw new Error('Bad request')
-    }
+  static set
+    : (id: string, doc: object) => promiseWrite
+    = (id, doc) => {
+      if (id == null || doc == null) {
+        throw new Error('Bad request')
+      }
 
-    return db.collection('users')
-      .doc(id)
-      .set(doc)
-  }
+      return collection.doc(id).set(doc)
+    }
 
   /**
    * Query user for the given id
    */
-  static getById: (id: string) => promiseUserNull = async (id) => {
-    if (id == null) {
-      throw new Error('Bad request')
+  static getById
+    : (id: string) => promiseUserNull
+    = async (id) => {
+      if (id == null) {
+        throw new Error('Bad request')
+      }
+
+      const doc = await collection.doc(id).get()
+
+      if (doc == null || !doc.exists) {
+        return null
+      }
+
+      return spreadDoc(doc) as User
     }
-
-    const doc = await db.collection('users')
-      .doc(id)
-      .get()
-
-    if (doc == null || !doc.exists) {
-      return null
-    }
-
-    return spreadDoc(doc)
-  }
 
   /**
    * Query random user
    */
-  static getOne: () => promiseUserNull = async () => {
-    const snap = await db.collection('users')
-      .limit(1)
-      .get()
+  static getOne
+    : () => promiseUserNull
+    = async () => {
+      const snap = await collection.limit(1).get()
 
-    if (snap == null || snap.empty) {
-      return null
+      if (snap == null || snap.empty) {
+        return null
+      }
+
+      const doc = snap.docs[0]
+
+      return spreadDoc(doc) as User
     }
-
-    const doc = snap.docs[0]
-
-    return spreadDoc(doc)
-  }
 
   /**
    * Update user for the given id
    */
-  static update: (id: string, fields: object) => promiseWrite = (id, fields) => (
-    db.collection('users')
-      .doc(id)
-      .update(fields)
-  )
+  static update
+    : (id: string, fields: object) => promiseWrite
+    = (id, fields) => (
+      collection.doc(id).update(fields)
+    )
 }
-
-export { Users }

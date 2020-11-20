@@ -2,7 +2,7 @@
 import { Ctx, promiseUserNull } from '../../../../types'
 
 
-const createMe:
+export const createMe:
   (root: object, args: object, ctx: Ctx) => promiseUserNull
   = async (root, args, ctx) => {
     console.log(`createMeMutation args: ${JSON.stringify(args)}, ctx: ${JSON.stringify(ctx)} !!!!`)
@@ -25,5 +25,3 @@ const createMe:
 
     return user
   }
-
-export { createMe }

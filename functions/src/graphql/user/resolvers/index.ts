@@ -3,11 +3,9 @@ import { Me } from './me'
 import { Query } from './query'
 import { Mutation } from './mutation'
 
-const userResolvers = {
+export const userResolvers = {
   User,
   Me,
   Query,
   Mutation,
 }
-
-export { userResolvers }

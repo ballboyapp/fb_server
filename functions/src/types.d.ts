@@ -1,4 +1,5 @@
 import admin from 'firebase-admin'
+import { SPORTS } from './constants'
 
 // https://stackoverflow.com/questions/58200432/argument-of-type-req-request-res-iresponse-next-nextfunction-void-is
 // https://github.com/microsoft/TypeScript/issues/7352#issuecomment-191547232
@@ -8,64 +9,151 @@ declare module 'express-serve-static-core' {
   }
 }
 
-type promiseWrite = Promise<admin.firestore.WriteResult>
-type promiseDocReference = Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>>
-type queryDocData = admin.firestore.QueryDocumentSnapshot<admin.firestore.DocumentData>
-type docData = admin.firestore.DocumentSnapshot<admin.firestore.DocumentData>
+export type promiseWrite = Promise<admin.firestore.WriteResult>
+export type promiseDocReference = Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>>
+export type queryDocData = admin.firestore.QueryDocumentSnapshot<admin.firestore.DocumentData>
+export type docData = admin.firestore.DocumentSnapshot<admin.firestore.DocumentData>
 
-interface Id {
+export type Sport = keyof typeof SPORTS
+
+export interface Id {
   id: string
 }
 
-interface User extends Id { }
-interface Me extends User { }
+export interface Profile {
+  id: string
+  username: string
+  avatar: string
+  language: string
+  cityId: string
+}
 
-interface City extends Id {
+export interface User extends Id {
+  profile?: Profile
+}
+
+export interface UserDeatilsInput {
+  id: string
+}
+
+export interface Me extends User { }
+
+export interface City extends Id {
   name: string
   country: string
 }
 
-type promiseUserNull = Promise<User | null>
-type promiseCityNull = Promise<City | null>
-type promiseCities = Promise<City[]>
+export interface City extends Id {
+  name: string
+  country: string
+}
 
-interface CtxMe {
+export interface Spot extends Id {
+  cityId: string
+  spotname: string
+  address: string
+  location: [number, number]
+  images: string[]
+  sports: Sport[]
+  // activities(limit: Int!, offset: Int!): [Activity]
+}
+
+export enum ACTIVITY_STATUSES {
+  ACTIVE,
+  CANCELED,
+  FINISHED,
+  DELETED,
+}
+
+export type ActivityStatus = keyof typeof ACTIVITY_STATUSES
+
+export interface Activity extends Id {
+  spotId: string
+  organizer: User
+  spot: Spot
+  sport: Sport
+  dateTime: Date
+  duration: number
+  title: string
+  description: string
+  status: ActivityStatus
+  capacity?: number
+  repeatFrequency?: number
+}
+
+export interface ActivityDetailsInput {
+  id: string
+}
+
+export interface ActivitiesInput {
+  sports?: Sport[]
+  offset: number
+  limit: number
+}
+
+export type promiseUserNull = Promise<User | null>
+export type promiseCityNull = Promise<City | null>
+export type promiseSpotNull = Promise<Spot | null>
+export type promiseActivityNull = Promise<Activity | null>
+export type promiseCities = Promise<City[]>
+export type promiseSpots = Promise<Spot[]>
+export type promiseActivities = Promise<Activity[]>
+
+export interface CtxMe {
   me: Me | null,
 }
 
-type userModel = {
-  createMe: (args: object) => promiseWrite,
+export type userModel = {
+  createMe: (args: object) => promiseWrite, // Use CreateMeInput
   getMe: () => promiseUserNull,
-  updateMe: (args: object) => promiseWrite,
+  updateMe: (args: object) => promiseWrite, // use UpdateMeInput
+  getUser: (args: UserDeatilsInput) => promiseUserNull,
 }
 
-type cityModel = {
+export type cityModel = {
   getCities: () => promiseCities,
 }
 
-interface CtxModels {
+export interface SpotsInput {
+  cityId: string
+  sports?: Sport[]
+  offset: number
+  limit: number
+}
+
+export interface SpotDetailsInput {
+  id: string
+}
+
+export type spotModel = {
+  getSpots: (args: SpotsInput) => promiseSpots,
+  getSpotDetails: (args: SpotDetailsInput) => promiseSpotNull,
+}
+
+export interface CreateActivityInput {
+  sport: Sport
+  dateTime: Date
+  duration: number
+  capacity?: number
+  spotId: string
+  title: string
+  description?: string
+  repeatFrequency: number
+}
+
+export type activityModel = {
+  createActivity: (args: CreateActivityInput) => Promise<string | null>,
+  getActivities: (args: ActivitiesInput) => promiseActivities,
+  getActivityDetails: (args: ActivityDetailsInput) => promiseActivityNull,
+}
+
+export interface CtxModels {
   models: {
     User: userModel,
     City: cityModel,
+    Spot: spotModel,
+    Activity: activityModel,
   },
 }
 
-interface Ctx extends CtxMe, CtxModels { }
-
-export {
-  promiseWrite,
-  promiseDocReference,
-  queryDocData,
-  docData,
-  Id,
-  User,
-  City,
-  promiseUserNull,
-  promiseCityNull,
-  promiseCities,
-  CtxMe,
-  userModel,
-  cityModel,
-  CtxModels,
-  Ctx,
-}
+export interface Ctx extends CtxMe, CtxModels { }

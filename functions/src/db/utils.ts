@@ -1,7 +1,5 @@
 import { Id, queryDocData, docData } from '../types'
 
-type fn = (doc: queryDocData | docData) => Id
-
-const spreadDoc: fn = (doc) => ({ id: doc.id, ...doc.data() })
-
-export { spreadDoc }
+export const spreadDoc
+  : (doc: queryDocData | docData) => Id
+  = (doc) => ({ id: doc.id, ...doc.data() })

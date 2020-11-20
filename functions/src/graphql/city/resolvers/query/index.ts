@@ -1,7 +1,5 @@
-import { getCities } from './get-cities'
+import { cities } from './cities'
 
-const Query = {
-  getCities,
+export const Query = {
+  cities,
 }
-
-export { Query }

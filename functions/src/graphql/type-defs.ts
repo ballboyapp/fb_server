@@ -1,10 +1,14 @@
 import { mergeTypeDefs } from '@graphql-tools/merge'
-import { userTypes } from './user/type-defs'
+import { commonTypes } from './common/type-defs'
 import { cityTypes } from './city/type-defs'
+import { spotTypes } from './spot/type-defs'
+import { activityTypes } from './activity/type-defs'
+import { userTypes } from './user/type-defs'
 
-const typeDefs = mergeTypeDefs([
-  userTypes,
+export const typeDefs = mergeTypeDefs([
+  commonTypes,
   cityTypes,
+  spotTypes,
+  activityTypes,
+  userTypes,
 ])
-
-export { typeDefs }

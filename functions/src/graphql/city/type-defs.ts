@@ -1,5 +1,5 @@
 // See: https://github.com/graphql/graphql-js/issues/703
-const cityTypes = `
+export const cityTypes = `
   # ENUMS
 
   # TYPES
@@ -8,8 +8,6 @@ const cityTypes = `
     id: ID!
     name: String
     country: String
-    #formattedAddress: String
-    #location: Point
   }
 
   # INPUTS
@@ -17,11 +15,9 @@ const cityTypes = `
   # QUERIES
 
   type Query {
-    getCities: [City]
+    cities: [City]
   }
 
   # MUTATIONS
 
 `
-
-export { cityTypes }
