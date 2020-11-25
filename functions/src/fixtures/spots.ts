@@ -7,8 +7,8 @@ export const spotsFixture = https.onRequest(async (req, res) => {
   try {
     const cities = await Cities.getAll()
 
-    const enschedeId = cities.find(({ name }) => name === 'Enschede')?.id
-    const rotterdamId = cities.find(({ name }) => name === 'Rotterdam')?.id
+    const enschedeId = cities.find((city) => city?.name === 'Enschede')?.id
+    const rotterdamId = cities.find((city) => city?.name === 'Rotterdam')?.id
 
     const SPOTS = [{
       cityId: enschedeId,

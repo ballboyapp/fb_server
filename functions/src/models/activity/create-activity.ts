@@ -30,10 +30,10 @@ export const createActivity
       ...args,
       organizerId: id,
       status: ACTIVITY_STATUSES.ACTIVE,
+      attendeesIds: [id],
     }
 
     const res = await Activities.add(doc)
-    console.log('ADD ACTIVITY RES', res)
 
     return res?.id || null
   }

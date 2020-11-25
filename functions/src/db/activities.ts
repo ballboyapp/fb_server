@@ -26,7 +26,10 @@ export class Activities {
         throw new Error('Bad request')
       }
 
-      return collection.add(doc)
+      return collection.add({
+        ...doc,
+        // timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      })
     }
 
   /**

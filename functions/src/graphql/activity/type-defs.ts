@@ -19,7 +19,7 @@ export const activityTypes = `
   type Activity {
     id: ID!
     organizer: User
-    #isOrganizer: Boolean
+    isOrganizer: Boolean
     spot: Spot
     sport: Sport
     dateTime: Date
@@ -30,9 +30,9 @@ export const activityTypes = `
     capacity: Int
     #shareLink: String
     #chatRoomId: String
-    #attendeesIds: [ID]
-    #attendees: [User]
-    #isAttendee: Boolean
+    attendeesIds: [ID]!
+    attendees: [User]
+    isAttendee: Boolean
     #distance: Float # meters
     repeatFrequency: Int # weeks. 0 means do not repeat
   }
@@ -84,8 +84,11 @@ export const activityTypes = `
     #): Activity
 
     #deleteActivity
-    #addAttendee(_id: ID!): Activity
-    #removeAttendee(_id: ID!): Activity
+
+    addAttendee(id: ID!): Activity
+
+    removeAttendee(id: ID!): Activity
+
     #newMessage(_id: ID!, senderId!): Activity
   }
 `

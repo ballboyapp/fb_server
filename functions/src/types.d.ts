@@ -70,6 +70,7 @@ export type ActivityStatus = keyof typeof ACTIVITY_STATUSES
 export interface Activity extends Id {
   spotId: string
   organizer: User
+  isOrganizer: boolean
   spot: Spot
   sport: Sport
   dateTime: Date
@@ -78,6 +79,9 @@ export interface Activity extends Id {
   description: string
   status: ActivityStatus
   capacity?: number
+  attendeesIds: string[]
+  attendees: User[]
+  isAttendee: boolean
   repeatFrequency?: number
 }
 
@@ -95,9 +99,10 @@ export type promiseUserNull = Promise<User | null>
 export type promiseCityNull = Promise<City | null>
 export type promiseSpotNull = Promise<Spot | null>
 export type promiseActivityNull = Promise<Activity | null>
-export type promiseCities = Promise<City[]>
+export type promiseUsers = Promise<(User | null)[]>
+export type promiseCities = Promise<(City | null)[]>
 export type promiseSpots = Promise<Spot[]>
-export type promiseActivities = Promise<Activity[]>
+export type promiseActivities = Promise<(Activity | null)[]>
 
 export interface CtxMe {
   me: Me | null,
