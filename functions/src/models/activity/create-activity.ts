@@ -7,8 +7,6 @@ export const createActivity
   = async (ctxMe, args) => {
     const id = ctxMe?.me?.id
 
-    console.log('CREATE ACTIVITY ME.ID', id, args)
-
     // Make sure user is logged in
     if (id == null) {
       throw new Error('Unauthorized')
