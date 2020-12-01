@@ -148,6 +148,8 @@ export interface CreateActivityInput {
 
 export type activityModel = {
   createActivity: (args: CreateActivityInput) => Promise<string | null>,
+  addAttendee: (args: Id) => promiseActivityNull,
+  removeAttendee: (args: Id) => promiseActivityNull,
   getActivities: (args: ActivitiesInput) => promiseActivities,
   getActivityDetails: (args: ActivityDetailsInput) => promiseActivityNull,
 }

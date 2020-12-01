@@ -1,9 +1,9 @@
-import { CtxMe, Activity, promiseActivityNull } from '../../types'
+import { CtxMe, Id, promiseActivityNull } from '../../types'
 import { ACTIVITY_STATUSES } from '../../constants'
 import { Activities } from '../../db'
 
 export const removeAttendee
-  : (ctxMe: CtxMe, args: Activity) => promiseActivityNull
+  : (ctxMe: CtxMe, args: Id) => promiseActivityNull
   = async (ctxMe, args) => {
     const id = ctxMe?.me?.id
 
@@ -34,8 +34,8 @@ export const removeAttendee
     const index = attendeesIds.indexOf(id)
 
     // isAttendee
-    if (index != -1) {
-      throw new Error('You already signed up!')
+    if (index == -1) {
+      throw new Error('You are not an attendee')
     }
 
     const fields = {

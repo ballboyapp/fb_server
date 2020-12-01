@@ -5,7 +5,7 @@ import { Ctx, Id, promiseActivityNull } from '../../../../types'
 export const addAttendee
   : (root: object, args: Id, ctx: Ctx) => promiseActivityNull
   = async (root, args, ctx) => {
-    // console.log('addAttendeeMutation', args, ctx)
+    console.log('addAttendeeMutation', args, ctx)
 
     const activity = await ctx.models.Activity.addAttendee(args)
 
