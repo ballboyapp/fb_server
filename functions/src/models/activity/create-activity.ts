@@ -5,10 +5,10 @@ import { Activities } from '../../db'
 export const createActivity
   : (ctxMe: CtxMe, args: CreateActivityInput) => promiseActivityNull
   = async (ctxMe, args) => {
-    const id = ctxMe?.me?.id
+    const meId = ctxMe?.me?.id
 
     // Make sure user is logged in
-    if (id == null) {
+    if (meId == null) {
       throw new Error('Unauthorized')
     }
 
@@ -26,9 +26,9 @@ export const createActivity
 
     const doc = {
       ...args,
-      organizerId: id,
+      organizerId: meId,
       status: ACTIVITY_STATUSES.ACTIVE,
-      attendeesIds: [id],
+      attendeesIds: [meId],
     }
 
     const res = await Activities.add(doc)

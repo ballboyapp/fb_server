@@ -36,7 +36,9 @@ export interface UserDeatilsInput {
   id: string
 }
 
-export interface Me extends User { }
+export interface Me extends User {
+  // TODO
+}
 
 export interface City extends Id {
   name: string
@@ -69,6 +71,7 @@ export type ActivityStatus = keyof typeof ACTIVITY_STATUSES
 
 export interface Activity extends Id {
   spotId: string
+  organizerId: string
   organizer: User
   isOrganizer: boolean
   spot: Spot
@@ -95,6 +98,7 @@ export interface ActivitiesInput {
   limit: number
 }
 
+export type promiseMeNull = Promise<Me | null>
 export type promiseUserNull = Promise<User | null>
 export type promiseCityNull = Promise<City | null>
 export type promiseSpotNull = Promise<Spot | null>
@@ -109,9 +113,9 @@ export interface CtxMe {
 }
 
 export type userModel = {
-  createMe: (args: object) => promiseWrite, // Use CreateMeInput
-  getMe: () => promiseUserNull,
-  updateMe: (args: object) => promiseWrite, // use UpdateMeInput
+  createMe: (args: object) => promiseMeNull, // TODO: use CreateMeInput
+  getMe: () => promiseMeNull,
+  updateMe: (args: object) => promiseMeNull, // TODO: use UpdateMeInput
   getUser: (args: UserDeatilsInput) => promiseUserNull,
 }
 

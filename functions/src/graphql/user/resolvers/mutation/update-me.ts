@@ -5,7 +5,7 @@ export const updateMe:
   = async (root, args, ctx) => {
     console.log('updateMeMutation', args)
 
-    await ctx.models.User.updateMe(args)
+    const me = await ctx.models.User.updateMe(args)
 
-    return ctx.models.User.getMe()
+    return me
   }

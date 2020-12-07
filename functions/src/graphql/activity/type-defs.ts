@@ -18,6 +18,7 @@ export const activityTypes = `
 
   type Activity {
     id: ID!
+    organizerId: ID!
     organizer: User
     isOrganizer: Boolean
     spot: Spot
@@ -33,7 +34,7 @@ export const activityTypes = `
     attendeesIds: [ID]!
     attendees: [User]
     isAttendee: Boolean
-    repeatFrequency: Int # weeks. 0 means do not repeat. x means repeat every X weeks
+    repeatFrequency: Int # weeks. 0 means do not repeat. x means repeat every x weeks
     # Change name to recurrent or repeat
   }
 

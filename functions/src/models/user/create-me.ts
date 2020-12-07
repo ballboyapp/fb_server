@@ -1,14 +1,14 @@
 import { auth } from 'firebase-admin'
-import { CtxMe, promiseWrite } from '../../types'
+import { CtxMe, promiseMeNull } from '../../types'
 import { Users } from '../../db'
 
 export const createMe
-  : (ctxMe: CtxMe, args: object) => promiseWrite
+  : (ctxMe: CtxMe, args: object) => promiseMeNull
   = async (ctxMe, args) => {
-    const id = ctxMe?.me?.id
+    const meId = ctxMe?.me?.id
 
     // Only allow owner to update its own data
-    if (id == null) {
+    if (meId == null) {
       throw new Error('Unauthorized')
     }
 
@@ -17,14 +17,14 @@ export const createMe
     }
 
     // Make sure user doesn't exist already
-    const existingUser = await Users.getById(id)
+    const existingUser = await Users.getById(meId)
 
     if (existingUser != null) {
       throw new Error('Bad request')
     }
 
     // Get auth user
-    const user = await auth().getUser(id)
+    const user = await auth().getUser(meId)
 
     if (user == null) {
       throw new Error('Bad request')
@@ -44,5 +44,7 @@ export const createMe
       }
     }
 
-    return Users.set(id, doc)
+    await Users.set(meId, doc)
+
+    return Users.getById(meId)
   }

@@ -5,10 +5,10 @@ import { Activities } from '../../db'
 export const addAttendee
   : (ctxMe: CtxMe, args: Id) => promiseActivityNull
   = async (ctxMe, args) => {
-    const id = ctxMe?.me?.id
+    const meId = ctxMe?.me?.id
 
     // Make sure user is logged in
-    if (id == null) {
+    if (meId == null) {
       throw new Error('Unauthorized')
     }
 
@@ -30,7 +30,7 @@ export const addAttendee
       throw new Error('Activity is not active')
     }
 
-    const isAttendee = attendeesIds.includes(id)
+    const isAttendee = attendeesIds.includes(meId)
 
     if (isAttendee) {
       throw new Error('You already signed up!')
@@ -42,7 +42,7 @@ export const addAttendee
       throw new Error('The activity is full')
     }
 
-    const fields = { attendeesIds: [...attendeesIds, id] }
+    const fields = { attendeesIds: [...attendeesIds, meId] }
 
     await Activities.update(activityId, fields)
 

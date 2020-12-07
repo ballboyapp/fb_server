@@ -7,9 +7,7 @@ export const createMe:
   = async (root, args, ctx) => {
     console.log(`createMeMutation args: ${JSON.stringify(args)}, ctx: ${JSON.stringify(ctx)} !!!!`)
 
-    await ctx.models.User.createMe(args)
-
-    const user = await ctx.models.User.getMe()
+    const me = await ctx.models.User.createMe(args)
 
     // TODO: or use listener?
     // // Register user on NotificationsList
@@ -23,5 +21,5 @@ export const createMe:
     //   // TODO: log/sentry
     // }
 
-    return user
+    return me
   }

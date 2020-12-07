@@ -4,13 +4,13 @@ import { Users } from '../../db'
 export const getMe
   : (ctxMe: CtxMe) => promiseUserNull
   = (ctxMe) => {
-    const id = ctxMe?.me?.id
+    const meId = ctxMe?.me?.id
 
     // Only allow owner to access its own data
-    if (id == null) {
+    if (meId == null) {
       return Promise.resolve(null)
     }
 
     // Query logged in user
-    return Users.getById(id)
+    return Users.getById(meId)
   }

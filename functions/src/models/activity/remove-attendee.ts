@@ -5,10 +5,10 @@ import { Activities } from '../../db'
 export const removeAttendee
   : (ctxMe: CtxMe, args: Id) => promiseActivityNull
   = async (ctxMe, args) => {
-    const id = ctxMe?.me?.id
+    const meId = ctxMe?.me?.id
 
     // Make sure user is logged in
-    if (id == null) {
+    if (meId == null) {
       throw new Error('Unauthorized')
     }
 
@@ -31,7 +31,7 @@ export const removeAttendee
       throw new Error('Activity is not active');
     }
 
-    const index = attendeesIds.indexOf(id)
+    const index = attendeesIds.indexOf(meId)
 
     // Is not attendee
     if (index == -1) {
