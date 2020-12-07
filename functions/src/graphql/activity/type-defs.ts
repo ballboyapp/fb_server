@@ -33,8 +33,8 @@ export const activityTypes = `
     attendeesIds: [ID]!
     attendees: [User]
     isAttendee: Boolean
-    #distance: Float # meters
-    repeatFrequency: Int # weeks. 0 means do not repeat
+    repeatFrequency: Int # weeks. 0 means do not repeat. x means repeat every X weeks
+    # Change name to recurrent or repeat
   }
 
   # INPUTS
@@ -67,28 +67,32 @@ export const activityTypes = `
       repeatFrequency: Int,
     ): Activity
 
-    #updateActivity(
-    #  id: ID!,
-    #  dateTime: String!,
-    #  duration: Int,
-    #  capacity: Int,
-    #  spotId: ID!,
-    #  title: String!,
-    #  description: String,
-    #  repeatFrequency: Int,
-    #): Activity
+    updateActivity(
+      id: ID!,
+      dateTime: String!,
+      duration: Int,
+      capacity: Int,
+      spotId: ID!,
+      title: String!,
+      description: String,
+      repeatFrequency: Int,
+    ): Activity
 
-    #cancelActivity(
-    #  id: ID!,
-    #  msg: String,
-    #): Activity
+    cancelActivity(
+      id: ID!,
+    ): Activity
 
     #deleteActivity
 
-    addAttendee(id: ID!): Activity
+    addAttendee(
+      id: ID!,
+    ): Activity
 
-    removeAttendee(id: ID!): Activity
+    removeAttendee(
+      id: ID!,
+    ): Activity
 
-    #newMessage(_id: ID!, senderId!): Activity
+    #newMessage(id: ID!, senderId!): Activity
+    # ^ This should probably call a Chat method instead
   }
 `

@@ -1,9 +1,9 @@
-import { CtxMe, CreateActivityInput } from '../../types'
+import { CtxMe, CreateActivityInput, promiseActivityNull } from '../../types'
 import { ACTIVITY_STATUSES } from '../../constants'
 import { Activities } from '../../db'
 
 export const createActivity
-  : (ctxMe: CtxMe, args: CreateActivityInput) => Promise<string | null>
+  : (ctxMe: CtxMe, args: CreateActivityInput) => promiseActivityNull
   = async (ctxMe, args) => {
     const id = ctxMe?.me?.id
 
@@ -33,5 +33,7 @@ export const createActivity
 
     const res = await Activities.add(doc)
 
-    return res?.id || null
+    if (res?.id == null) return null
+
+    return Activities.getById(res.id)
   }

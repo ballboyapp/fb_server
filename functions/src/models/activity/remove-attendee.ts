@@ -33,7 +33,7 @@ export const removeAttendee
 
     const index = attendeesIds.indexOf(id)
 
-    // isAttendee
+    // Is not attendee
     if (index == -1) {
       throw new Error('You are not an attendee')
     }

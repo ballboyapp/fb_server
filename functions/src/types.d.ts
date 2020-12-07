@@ -146,8 +146,21 @@ export interface CreateActivityInput {
   repeatFrequency: number
 }
 
+export interface UpdateActivityInput {
+  id: string
+  dateTime: Date
+  duration: number
+  capacity?: number
+  spotId: string
+  title: string
+  description?: string
+  repeatFrequency: number
+}
+
 export type activityModel = {
-  createActivity: (args: CreateActivityInput) => Promise<string | null>,
+  createActivity: (args: CreateActivityInput) => promiseActivityNull,
+  updateActivity: (args: UpdateActivityInput) => promiseActivityNull,
+  cancelActivity: (args: Id) => promiseActivityNull,
   addAttendee: (args: Id) => promiseActivityNull,
   removeAttendee: (args: Id) => promiseActivityNull,
   getActivities: (args: ActivitiesInput) => promiseActivities,
