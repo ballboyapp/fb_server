@@ -3,7 +3,7 @@ import { Ctx, Id, promiseActivityNull } from '../../../../types'
 export const cancelActivity
   : (root: object, args: Id, ctx: Ctx) => promiseActivityNull
   = async (root, args, ctx) => {
-    // console.log('cancelActivityMutation', args, ctx)
+    console.log('cancelActivityMutation', args, ctx)
     // const { usr } = ctx
     // const { msg } = args
 

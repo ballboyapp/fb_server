@@ -14,7 +14,7 @@ export const cancelActivity
 
     const activityId = args?.id
 
-    if (activityId) {
+    if (activityId == null) {
       throw new Error('Bad request')
     }
 
